@@ -1,0 +1,64 @@
+package modelo;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author elton
+ */
+public class Resultado implements Serializable{
+    
+    private Integer numeroDeVoltasRealizadas;
+    private List<Posicao> posicoes;
+
+    /**
+     * Construtor vazio
+     */
+    public Resultado() {
+        numeroDeVoltasRealizadas = new Integer(0);
+        posicoes = new ArrayList<Posicao>();
+    }
+
+    /**
+     * Construtor parametrizado
+     * @param numeroDeVoltasRealizadas
+     * @param posicoes 
+     */
+    public Resultado(Integer numeroDeVoltasRealizadas, List<Posicao> posicoes) {
+        this.numeroDeVoltasRealizadas = numeroDeVoltasRealizadas;
+        this.posicoes = posicoes;
+    }
+
+    /**
+     * @return the numeroDeVoltasRealizadas
+     */
+    public Integer getNumeroDeVoltasRealizadas() {
+        return numeroDeVoltasRealizadas;
+    }
+
+    /**
+     * @param numeroDeVoltasRealizadas the numeroDeVoltasRealizadas to set
+     */
+    public void setNumeroDeVoltasRealizadas(Integer numeroDeVoltasRealizadas) {
+        this.numeroDeVoltasRealizadas = numeroDeVoltasRealizadas;
+    }
+
+    /**
+     * @return the posicoes
+     */
+    public List<Posicao> getPosicoes() {
+        return posicoes;
+    }
+
+    /**
+     * @param posicoes the posicoes to set
+     */
+    public void setPosicoes(List<Posicao> posicoes) {
+        this.posicoes = posicoes;
+    }
+    
+}
