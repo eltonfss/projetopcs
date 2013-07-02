@@ -1,10 +1,10 @@
 package teste;
 
-import modelo.Piloto;
-import modelo.Campeonato;
-import modelo.Equipe;
-import modelo.Corrida;
-import modelo.Carro;
+import model.Piloto;
+import model.Campeonato;
+import model.Equipe;
+import model.Corrida;
+import model.Carro;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;

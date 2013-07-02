@@ -1,4 +1,4 @@
-package modelo;
+package model;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,6 +14,7 @@ public class Resultado implements Serializable{
     
     private Integer numeroDeVoltasRealizadas;
     private List<Posicao> posicoes;
+    private Corrida corrida;
 
     /**
      * Construtor vazio
@@ -21,6 +22,7 @@ public class Resultado implements Serializable{
     public Resultado() {
         numeroDeVoltasRealizadas = new Integer(0);
         posicoes = new ArrayList<Posicao>();
+        corrida = new Corrida();
     }
 
     /**
@@ -28,9 +30,10 @@ public class Resultado implements Serializable{
      * @param numeroDeVoltasRealizadas
      * @param posicoes 
      */
-    public Resultado(Integer numeroDeVoltasRealizadas, List<Posicao> posicoes) {
+    public Resultado(Integer numeroDeVoltasRealizadas, List<Posicao> posicoes,Corrida corrida) {
         this.numeroDeVoltasRealizadas = numeroDeVoltasRealizadas;
         this.posicoes = posicoes;
+        this.corrida = corrida;
     }
 
     /**
@@ -59,6 +62,20 @@ public class Resultado implements Serializable{
      */
     public void setPosicoes(List<Posicao> posicoes) {
         this.posicoes = posicoes;
+    }
+
+    /**
+     * @return the corrida
+     */
+    public Corrida getCorrida() {
+        return corrida;
+    }
+
+    /**
+     * @param corrida the corrida to set
+     */
+    public void setCorrida(Corrida corrida) {
+        this.corrida = corrida;
     }
     
 }
