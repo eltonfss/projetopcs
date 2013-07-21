@@ -142,6 +142,7 @@ public class ManterCampeonato {
         try{
             if(instanciarCampeonatoExistente(baseDeDados)){
                 corridas = campeonato.getCorridas();
+                
                 if(!corridas.isEmpty()){
                     corridas.clear();
                 }
@@ -235,11 +236,20 @@ public class ManterCampeonato {
      */
     public static boolean importarPilotos(File arquivoDeEntrada){
         List<Piloto> pilotos;
+        List<Corrida> corridas;
         File baseDeDados = new File(PATH_BASE_DE_DADOS);
         try {
             if(instanciarCampeonatoExistente(new File(PATH_BASE_DE_DADOS))){
                 pilotos = campeonato.getPilotos();
+                corridas = campeonato.getCorridas();
                 if(!pilotos.isEmpty()){
+                    //Limpar resultados de corrida
+                    if(!corridas.isEmpty()){
+                        for (Corrida corrida : corridas) {
+                            corrida.setResultado(null);
+                        }
+                    }
+                    //Limpar pilotos
                     pilotos.clear();
                 }
                 lerPilotos(arquivoDeEntrada);
@@ -338,7 +348,11 @@ public class ManterCampeonato {
                 Corrida corridaResultado = resultado.getCorrida();
                 for (Corrida corrida : corridas) {
                     if(corrida.getNumeroDaCorrida().equals(corridaResultado.getNumeroDaCorrida())){
-                        return true;
+                        if(corrida.getResultado() != null){
+                            return false;
+                        }else{
+                            return true;
+                        }
                     }
                 }
             }else{
