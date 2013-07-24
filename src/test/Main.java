@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class Main {
     
-    
+    /*
     public static void main(String[] args) {
         
         //Criar e associar pilotos,carro e equipe
@@ -57,5 +57,5 @@ public class Main {
         campeonato.setCorridas(corridas);
         campeonato.setPilotos(pilotos);
 
-    }
+    }*/
 }

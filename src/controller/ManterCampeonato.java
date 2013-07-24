@@ -27,7 +27,7 @@ public class ManterCampeonato {
     private static Campeonato campeonato;
     private static XMLDecoder xmlDecoder;
     private static XMLEncoder xmlEncoder;
-    private static final String PATH_BASE_DE_DADOS = "../F1.XML";
+    private static final String PATH_BASE_DE_DADOS = "F1.XML";
 
     /**
      * Instanciar novo campeonato
@@ -41,10 +41,19 @@ public class ManterCampeonato {
      * Instanciar campeonato existente a partir de uma baseDeDados(F1.XML)
      * @param baseDeDados 
      */
-    private static boolean instanciarCampeonatoExistente(File baseDeDados)throws FileNotFoundException{
+    private static boolean instanciarCampeonatoExistente()throws FileNotFoundException{
        try{
-           xmlDecoder = new XMLDecoder(new FileInputStream(baseDeDados));
-           campeonato = (Campeonato) xmlDecoder.readObject();
+           ManterCampeonato m = new ManterCampeonato();
+           String path;
+           try{
+             path = m.getClass().getClassLoader().getResource(PATH_BASE_DE_DADOS).getPath().replace("%20", " ");
+           }catch(Exception e){
+               path = null;
+           }
+           if(path != null){
+            xmlDecoder = new XMLDecoder(new FileInputStream(path));
+            campeonato = (Campeonato) xmlDecoder.readObject();
+           }
            if(campeonato != null){
                 return true;
            }else{
@@ -62,9 +71,9 @@ public class ManterCampeonato {
      * @return
      * @throws FileNotFoundException 
      */
-    private static boolean persistirCampeonato(File baseDeDados)throws FileNotFoundException{
+    private static boolean persistirCampeonato()throws FileNotFoundException{
        try{
-            xmlEncoder = new XMLEncoder(new FileOutputStream(baseDeDados));
+            xmlEncoder = new XMLEncoder(new FileOutputStream(PATH_BASE_DE_DADOS));
             xmlEncoder.writeObject(campeonato);
             return true;
         }finally{
@@ -79,7 +88,7 @@ public class ManterCampeonato {
      */
     public static boolean calendarioDeCorridasJaFoiImportado(){
         try {
-            if(instanciarCampeonatoExistente(new File(PATH_BASE_DE_DADOS))){
+            if(instanciarCampeonatoExistente()){
                 if(campeonato.getCorridas().isEmpty()){
                     return false;
                 }else{
@@ -140,7 +149,7 @@ public class ManterCampeonato {
         List<Corrida> corridas;
         File baseDeDados = new File(PATH_BASE_DE_DADOS);
         try{
-            if(instanciarCampeonatoExistente(baseDeDados)){
+            if(instanciarCampeonatoExistente()){
                 corridas = campeonato.getCorridas();
                 
                 if(!corridas.isEmpty()){
@@ -150,7 +159,7 @@ public class ManterCampeonato {
                 corridas.addAll(lerCalendarioDeCorridas(arquivoDeEntrada));
                 //Associar list de corridas ao campeonato
                 campeonato.setCorridas(corridas);
-                persistirCampeonato(baseDeDados);
+                persistirCampeonato();
             }else{
                 if(instanciarNovoCampeonato()){
                     corridas = new ArrayList<Corrida>();
@@ -158,7 +167,7 @@ public class ManterCampeonato {
                     corridas.addAll(lerCalendarioDeCorridas(arquivoDeEntrada));
                     //Associar list de corridas ao campeonato
                     campeonato.setCorridas(corridas);
-                    persistirCampeonato(baseDeDados);
+                    persistirCampeonato();
                 }else{
                     throw new Exception("Não foi possível instanciar novo campeonato!");
                 }
@@ -176,7 +185,7 @@ public class ManterCampeonato {
      */
     public static boolean pilotosJaForamImportados(){
         try {
-            if(instanciarCampeonatoExistente(new File(PATH_BASE_DE_DADOS))){
+            if(instanciarCampeonatoExistente()){
                 if(campeonato.getPilotos().isEmpty()){
                     return false;
                 }else{
@@ -239,7 +248,7 @@ public class ManterCampeonato {
         List<Corrida> corridas;
         File baseDeDados = new File(PATH_BASE_DE_DADOS);
         try {
-            if(instanciarCampeonatoExistente(new File(PATH_BASE_DE_DADOS))){
+            if(instanciarCampeonatoExistente()){
                 pilotos = campeonato.getPilotos();
                 corridas = campeonato.getCorridas();
                 if(!pilotos.isEmpty()){
@@ -254,13 +263,13 @@ public class ManterCampeonato {
                 }
                 lerPilotos(arquivoDeEntrada);
                 campeonato.setPilotos(pilotos);
-                persistirCampeonato(baseDeDados);
+                persistirCampeonato();
             }else{
                 if(instanciarNovoCampeonato()){
                     pilotos = new ArrayList<Piloto>();
                     lerPilotos(arquivoDeEntrada);
                     campeonato.setPilotos(pilotos);
-                    persistirCampeonato(baseDeDados);
+                    persistirCampeonato();
                 }else{
                     throw new Exception("Não foi possível instanciar novo campeonato!");
                 }
@@ -386,7 +395,7 @@ public class ManterCampeonato {
                 //Associa o List de corridas atualizado ao campeonato
                 campeonato.setCorridas(corridas);
                 //Salvar
-                persistirCampeonato(new File(PATH_BASE_DE_DADOS));
+                persistirCampeonato();
             }else{
                 throw new Exception("Calendário de corridas ainda não foi importado!");
             }
