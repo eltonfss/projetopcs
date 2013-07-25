@@ -20,9 +20,6 @@ public class Resultado implements Serializable{
      * Construtor vazio
      */
     public Resultado() {
-        numeroDeVoltasRealizadas = new Integer(0);
-        posicoes = new ArrayList<Posicao>();
-        corrida = new Corrida();
     }
 
     /**

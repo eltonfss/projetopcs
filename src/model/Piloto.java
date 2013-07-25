@@ -17,8 +17,7 @@ public class Piloto implements Serializable{
      * Construtor vazio
      */
     public Piloto() {
-        nome = new String();
-        carro = new Carro();
+        nome = "";
     }
 
     /**

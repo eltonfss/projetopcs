@@ -15,7 +15,6 @@ public class Carro implements Serializable{
      * Construtor vazio
      */
     public Carro() {
-        numero = new Integer(0);
     }
     
     /**

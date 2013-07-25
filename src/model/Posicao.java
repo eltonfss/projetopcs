@@ -18,9 +18,7 @@ public class Posicao implements Serializable{
      * Construtor vazio
      */
     public Posicao() {
-        numero = new Integer(0);
-        resultado = new Resultado();
-        carro = new Carro();
+        numero = 0;
     }
 
     /**

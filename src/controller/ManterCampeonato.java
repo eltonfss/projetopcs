@@ -27,7 +27,7 @@ public class ManterCampeonato {
     private static Campeonato campeonato;
     private static XMLDecoder xmlDecoder;
     private static XMLEncoder xmlEncoder;
-    private static final String PATH_BASE_DE_DADOS = "F1.XML";
+    private static final String PATH_BASE_DE_DADOS = "src/F1.XML";
 
     /**
      * Instanciar novo campeonato
@@ -41,24 +41,17 @@ public class ManterCampeonato {
      * Instanciar campeonato existente a partir de uma baseDeDados(F1.XML)
      * @param baseDeDados 
      */
-    private static boolean instanciarCampeonatoExistente()throws FileNotFoundException{
+    private static boolean instanciarCampeonatoExistente(){
        try{
-           ManterCampeonato m = new ManterCampeonato();
-           String path;
-           try{
-             path = m.getClass().getClassLoader().getResource(PATH_BASE_DE_DADOS).getPath().replace("%20", " ");
-           }catch(Exception e){
-               path = null;
-           }
-           if(path != null){
-            xmlDecoder = new XMLDecoder(new FileInputStream(path));
-            campeonato = (Campeonato) xmlDecoder.readObject();
-           }
+           xmlDecoder = new XMLDecoder(new FileInputStream(PATH_BASE_DE_DADOS));
+           campeonato = (Campeonato) xmlDecoder.readObject();
            if(campeonato != null){
                 return true;
            }else{
                return false;
            }
+       }catch(FileNotFoundException e){
+           return false;
        }finally{
            if(xmlDecoder != null)
             xmlDecoder.close();
@@ -87,18 +80,13 @@ public class ManterCampeonato {
      * @return
      */
     public static boolean calendarioDeCorridasJaFoiImportado(){
-        try {
-            if(instanciarCampeonatoExistente()){
-                if(campeonato.getCorridas().isEmpty()){
-                    return false;
-                }else{
-                    return true;
-                }
-            }else{
+        if(instanciarCampeonatoExistente()){
+            if(campeonato.getCorridas().isEmpty()){
                 return false;
+            }else{
+                return true;
             }
-        } catch (FileNotFoundException ex) {
-            System.err.println("ERRO: " + ex.getMessage());
+        }else{
             return false;
         }
     }
@@ -127,16 +115,18 @@ public class ManterCampeonato {
                 //Instanciar uma corrida setando os atributos com os valores lidos na linha
                 corrida = new Corrida();
                 //Integer.parseInt() -- converter string em inteiro
-                corrida.setNumeroDaCorrida(Integer.parseInt(arrayLinha[0]));
+                corrida.setNumeroDaCorrida(Integer.parseInt(arrayLinha[0].trim()));
                 corrida.setNomeDaEtapa(arrayLinha[1]);
                 //Date está cortado pois utilizei um método obsoleto porém o mesmo ainda funciona
-                corrida.setData(new Date(arrayLinha[2]));
-                corrida.setNumeroDeVoltasPrevistas(Integer.parseInt(arrayLinha[3]));
+                corrida.setData(new Date(arrayLinha[2].trim()));
+                corrida.setNumeroDeVoltasPrevistas(Integer.parseInt(arrayLinha[3].trim()));
                 //Adicionar corrida no list de corridas
                 corridas.add(corrida);
             }else{
                 throw new Exception("Arquivo de calendário de corridas inválido!");
             }
+            //Ler próxima linha
+            linha = reader.readLine();
         }
         return corridas;
     }
@@ -174,7 +164,7 @@ public class ManterCampeonato {
             }
             return true;
         }catch(Exception e){
-            System.err.println("ERRO: " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
@@ -184,18 +174,13 @@ public class ManterCampeonato {
      * @return 
      */
     public static boolean pilotosJaForamImportados(){
-        try {
-            if(instanciarCampeonatoExistente()){
-                if(campeonato.getPilotos().isEmpty()){
-                    return false;
-                }else{
-                    return true;
-                }
-            }else{
+        if(instanciarCampeonatoExistente()){
+            if(campeonato.getPilotos().isEmpty()){
                 return false;
+            }else{
+                return true;
             }
-        } catch (FileNotFoundException ex) {
-            System.err.println("ERRO: " + ex.getMessage());
+        }else{
             return false;
         }
     }
@@ -235,6 +220,8 @@ public class ManterCampeonato {
             }else{
                 throw new Exception("Arquivo de pilotos e equipes inválido!");
             }
+            //Ler próxima linha
+            linha = reader.readLine();
         }
         return pilotos;
     }
@@ -261,13 +248,12 @@ public class ManterCampeonato {
                     //Limpar pilotos
                     pilotos.clear();
                 }
-                lerPilotos(arquivoDeEntrada);
+                pilotos = lerPilotos(arquivoDeEntrada);
                 campeonato.setPilotos(pilotos);
                 persistirCampeonato();
             }else{
                 if(instanciarNovoCampeonato()){
-                    pilotos = new ArrayList<Piloto>();
-                    lerPilotos(arquivoDeEntrada);
+                    pilotos = lerPilotos(arquivoDeEntrada);
                     campeonato.setPilotos(pilotos);
                     persistirCampeonato();
                 }else{
@@ -276,7 +262,7 @@ public class ManterCampeonato {
             }
             return true;
         } catch (Exception e) {
-            System.err.println("ERRO: " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
@@ -301,7 +287,7 @@ public class ManterCampeonato {
            throw new Exception("Arquivo de resultado de corrida inválido!");
        }
        if(arrayLinha.length == 2){
-           corrida.setNumeroDaCorrida(Integer.parseInt(arrayLinha[1]));
+           corrida.setNumeroDaCorrida(Integer.parseInt(arrayLinha[1].trim()));
            resultado.setCorrida(corrida);
            corrida.setResultado(resultado);
        }else{
@@ -315,7 +301,7 @@ public class ManterCampeonato {
            throw new Exception("Arquivo de resultado de corrida inválido!");
        }
        if(arrayLinha.length == 2){
-           resultado.setNumeroDeVoltasRealizadas(Integer.parseInt(arrayLinha[1]));
+           resultado.setNumeroDeVoltasRealizadas(Integer.parseInt(arrayLinha[1].trim()));
        }else{
            throw new Exception("Arquivo de resultado de corrida inválido!");
        }
@@ -328,14 +314,16 @@ public class ManterCampeonato {
            arrayLinha = linha.split(";");
            if(arrayLinha.length == 2){
                posicao = new Posicao();
-               posicao.setNumero(Integer.parseInt(arrayLinha[0]));
+               posicao.setNumero(Integer.parseInt(arrayLinha[0].trim()));
                carro = new Carro();
-               carro.setNumero(Integer.parseInt(arrayLinha[1]));
+               carro.setNumero(Integer.parseInt(arrayLinha[1].trim()));
                posicao.setCarro(carro);
                posicoes.add(posicao);
            }else{
                throw new Exception("Arquivo de resultado de corrida inválido!");
            }
+           //Ler próxima linha
+           linha = reader.readLine();
        }
        resultado.setPosicoes(posicoes);
        return resultado;
@@ -358,9 +346,9 @@ public class ManterCampeonato {
                 for (Corrida corrida : corridas) {
                     if(corrida.getNumeroDaCorrida().equals(corridaResultado.getNumeroDaCorrida())){
                         if(corrida.getResultado() != null){
-                            return false;
-                        }else{
                             return true;
+                        }else{
+                            return false;
                         }
                     }
                 }
@@ -369,7 +357,7 @@ public class ManterCampeonato {
             }
             return false;
        }catch(Exception e){
-           System.err.println("ERRO: " + e.getMessage());
+           e.printStackTrace();
            return false;
        }
     }
@@ -401,7 +389,7 @@ public class ManterCampeonato {
             }
             return true;
        }catch(Exception e){
-           System.err.println("ERRO: " + e.getMessage());
+           e.printStackTrace();
            return false;
        }
     }

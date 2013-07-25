@@ -17,8 +17,7 @@ public class Equipe implements Serializable{
      * Construtor vazio
      */
     public Equipe() {
-        nome = new String();
-        carro = new Carro();
+        nome = "";
     }
 
     /**

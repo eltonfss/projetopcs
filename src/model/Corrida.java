@@ -1,12 +1,7 @@
 package model;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author elton
@@ -23,11 +18,10 @@ public class Corrida implements Serializable{
      * Construtor vazio
      */
     public Corrida() {
-        numeroDaCorrida = new Integer(0);
-        nomeDaEtapa = new String();
+        numeroDaCorrida = 0;
+        nomeDaEtapa = "";
         data = new Date();
-        numeroDeVoltasPrevistas = new Integer(0);
-        resultado = new Resultado();
+        numeroDeVoltasPrevistas = 0;
     }
 
     /**

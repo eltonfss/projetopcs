@@ -19,6 +19,7 @@ public class Interface extends javax.swing.JFrame {
      */
     public Interface() {
         initComponents();
+        habilitarBotaoDeImportacaoDeResultados();
     }
 
     /**
@@ -152,10 +153,6 @@ public class Interface extends javax.swing.JFrame {
         int retorno = fileChooser.showOpenDialog(null);
         //Efetuar importação
         if(retorno == JFileChooser.APPROVE_OPTION){
-            ManterCampeonato.importarPilotos(fileChooser.getSelectedFile());
-        }
-        
-        if(retorno == JFileChooser.APPROVE_OPTION){
             //Verificar se os pilotos já foram importados, confirmar e efetuar importação
             if(ManterCampeonato.pilotosJaForamImportados()){
                 int confirma = JOptionPane.showOptionDialog(jPanel1, "Os pilotos já foram importados uma vez. Deseja sobrescrever os dados?", "Confirmação de Importação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
@@ -166,17 +163,15 @@ public class Interface extends javax.swing.JFrame {
                 ManterCampeonato.importarPilotos(fileChooser.getSelectedFile());
             }
         }
-        
-        //Habilidar botão de importação de resultados
-        if(ManterCampeonato.pilotosJaForamImportados() && ManterCampeonato.calendarioDeCorridasJaFoiImportado()){
-            jButtonImportarResultadoDeCorrida.setEnabled(true);
-        }
+        habilitarBotaoDeImportacaoDeResultados();
         
     }//GEN-LAST:event_jButtonImportarPilotosActionPerformed
 
     private void jButtonImportarCalendarioDeCorridasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarCalendarioDeCorridasActionPerformed
+        //Exibir caixa de diálogo
         JFileChooser fileChooser = new JFileChooser();
         int retorno = fileChooser.showOpenDialog(null);
+        //Efetuar importação
         if(retorno == JFileChooser.APPROVE_OPTION){
             //Verificar se o calendário já foi importado,confirmar e efetuar importação
             if(ManterCampeonato.calendarioDeCorridasJaFoiImportado()){
@@ -188,16 +183,14 @@ public class Interface extends javax.swing.JFrame {
                 ManterCampeonato.importarCalendarioDeCorridas(fileChooser.getSelectedFile());
             }
         }
-        
-        //Habilidar botão de importação de resultados
-        if(ManterCampeonato.pilotosJaForamImportados() && ManterCampeonato.calendarioDeCorridasJaFoiImportado()){
-            jButtonImportarResultadoDeCorrida.setEnabled(true);
-        }
+        habilitarBotaoDeImportacaoDeResultados();
     }//GEN-LAST:event_jButtonImportarCalendarioDeCorridasActionPerformed
 
     private void jButtonImportarResultadoDeCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarResultadoDeCorridaActionPerformed
+        //Exibir caixa de diálogo
         JFileChooser fileChooser = new JFileChooser();
         int retorno = fileChooser.showOpenDialog(null);
+        //Efetuar importação
         if(retorno == JFileChooser.APPROVE_OPTION){
             if(ManterCampeonato.resultadoDeCorridaJaFoiImportado(fileChooser.getSelectedFile())){
                 int confirma = JOptionPane.showOptionDialog(jPanel1, "O resultado desta corrida já foi importado uma vez. Deseja sobrescrever os dados?", "Confirmação de Importação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
@@ -268,4 +261,11 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuSair;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
+    private void habilitarBotaoDeImportacaoDeResultados() {
+        //Habilidar botão de importação de resultados
+        if(ManterCampeonato.pilotosJaForamImportados() && ManterCampeonato.calendarioDeCorridasJaFoiImportado()){
+            jButtonImportarResultadoDeCorrida.setEnabled(true);
+        }
+    }
 }
