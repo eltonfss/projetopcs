@@ -31,123 +31,192 @@ public class Interface extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jButtonImportarPilotos = new javax.swing.JButton();
-        jButtonImportarCalendarioDeCorridas = new javax.swing.JButton();
-        jButtonImportarResultadoDeCorrida = new javax.swing.JButton();
-        jButtonVisualizarClassificacaoGeralDePilotos = new javax.swing.JButton();
-        jButtonImportarCalendarioDeCorridas1 = new javax.swing.JButton();
-        jButtonImportarResultadoDeCorrida1 = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        jTabbedPanePrincipal = new javax.swing.JTabbedPane();
+        jScrollPaneClassificacaoGeralDePilotos = new javax.swing.JScrollPane();
+        jTableClassificacaoGeralDePilotos = new javax.swing.JTable();
+        jScrollPaneClassificacaoGeralDeEquipes = new javax.swing.JScrollPane();
+        jTableClassificacaoGeralDeEquipes = new javax.swing.JTable();
+        jPanelClassificacaoDePilototosPorCorrida = new javax.swing.JPanel();
+        jComboBoxCorrida = new javax.swing.JComboBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jMenuBarPrincipal = new javax.swing.JMenuBar();
         jMenuArquivo = new javax.swing.JMenu();
-        jMenuSair = new javax.swing.JMenu();
+        jMenuItemImportarPilotos = new javax.swing.JMenuItem();
+        jMenuItemImportarCalendarioDeCorridas = new javax.swing.JMenuItem();
+        jMenuItemImportarResultadoDeCorrida = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButtonImportarPilotos.setText("Importar Pilotos");
-        jButtonImportarPilotos.addActionListener(new java.awt.event.ActionListener() {
+        jTableClassificacaoGeralDePilotos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Posição", "Nome", "Equipe", "Pontos"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPaneClassificacaoGeralDePilotos.setViewportView(jTableClassificacaoGeralDePilotos);
+        jTableClassificacaoGeralDePilotos.getColumnModel().getColumn(0).setResizable(false);
+        jTableClassificacaoGeralDePilotos.getColumnModel().getColumn(1).setResizable(false);
+        jTableClassificacaoGeralDePilotos.getColumnModel().getColumn(2).setResizable(false);
+        jTableClassificacaoGeralDePilotos.getColumnModel().getColumn(3).setResizable(false);
+
+        jTabbedPanePrincipal.addTab("Classificação Geral de Pilotos", jScrollPaneClassificacaoGeralDePilotos);
+
+        jTableClassificacaoGeralDeEquipes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Posição", "Nome", "Pontos"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPaneClassificacaoGeralDeEquipes.setViewportView(jTableClassificacaoGeralDeEquipes);
+        jTableClassificacaoGeralDeEquipes.getColumnModel().getColumn(0).setResizable(false);
+        jTableClassificacaoGeralDeEquipes.getColumnModel().getColumn(1).setResizable(false);
+        jTableClassificacaoGeralDeEquipes.getColumnModel().getColumn(2).setResizable(false);
+
+        jTabbedPanePrincipal.addTab("Classificação Geral de Equipes", jScrollPaneClassificacaoGeralDeEquipes);
+
+        jComboBoxCorrida.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxCorrida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonImportarPilotosActionPerformed(evt);
+                jComboBoxCorridaActionPerformed(evt);
             }
         });
 
-        jButtonImportarCalendarioDeCorridas.setText("Importar Calendário de Corridas");
-        jButtonImportarCalendarioDeCorridas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonImportarCalendarioDeCorridasActionPerformed(evt);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Posicao", "Nome", "Equipe", "Pontos"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
+        jScrollPane1.setViewportView(jTable1);
+        jTable1.getColumnModel().getColumn(0).setResizable(false);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jTable1.getColumnModel().getColumn(3).setResizable(false);
 
-        jButtonImportarResultadoDeCorrida.setText("Importar Resultado de Corrida");
-        jButtonImportarResultadoDeCorrida.setEnabled(false);
-        jButtonImportarResultadoDeCorrida.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonImportarResultadoDeCorridaActionPerformed(evt);
-            }
-        });
-
-        jButtonVisualizarClassificacaoGeralDePilotos.setText("Visualizar Classificação Geral de Pilotos");
-        jButtonVisualizarClassificacaoGeralDePilotos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonVisualizarClassificacaoGeralDePilotosActionPerformed(evt);
-            }
-        });
-
-        jButtonImportarCalendarioDeCorridas1.setText("Visualizar Classificação Geral de Equipes");
-        jButtonImportarCalendarioDeCorridas1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonImportarCalendarioDeCorridas1ActionPerformed(evt);
-            }
-        });
-
-        jButtonImportarResultadoDeCorrida1.setText("Visualizar Resultado de Corrida");
-        jButtonImportarResultadoDeCorrida1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonImportarResultadoDeCorrida1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonImportarResultadoDeCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonImportarResultadoDeCorrida1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonImportarPilotos, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonVisualizarClassificacaoGeralDePilotos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonImportarCalendarioDeCorridas, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonImportarCalendarioDeCorridas1, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)))
-                .addGap(6, 6, 6))
+        javax.swing.GroupLayout jPanelClassificacaoDePilototosPorCorridaLayout = new javax.swing.GroupLayout(jPanelClassificacaoDePilototosPorCorrida);
+        jPanelClassificacaoDePilototosPorCorrida.setLayout(jPanelClassificacaoDePilototosPorCorridaLayout);
+        jPanelClassificacaoDePilototosPorCorridaLayout.setHorizontalGroup(
+            jPanelClassificacaoDePilototosPorCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelClassificacaoDePilototosPorCorridaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelClassificacaoDePilototosPorCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+                    .addComponent(jComboBoxCorrida, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonImportarPilotos, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-                    .addComponent(jButtonVisualizarClassificacaoGeralDePilotos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonImportarCalendarioDeCorridas, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonImportarCalendarioDeCorridas1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonImportarResultadoDeCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonImportarResultadoDeCorrida1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 11, Short.MAX_VALUE))
+        jPanelClassificacaoDePilototosPorCorridaLayout.setVerticalGroup(
+            jPanelClassificacaoDePilototosPorCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelClassificacaoDePilototosPorCorridaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jComboBoxCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
+
+        jTabbedPanePrincipal.addTab("Classificação De Pilotos Por Corrida", jPanelClassificacaoDePilototosPorCorrida);
 
         jMenuArquivo.setText("Arquivo");
-        jMenuBar1.add(jMenuArquivo);
 
-        jMenuSair.setText("Sair");
-        jMenuBar1.add(jMenuSair);
+        jMenuItemImportarPilotos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemImportarPilotos.setText("Importar Pilotos");
+        jMenuItemImportarPilotos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemImportarPilotosActionPerformed(evt);
+            }
+        });
+        jMenuArquivo.add(jMenuItemImportarPilotos);
 
-        setJMenuBar(jMenuBar1);
+        jMenuItemImportarCalendarioDeCorridas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemImportarCalendarioDeCorridas.setText("Importar Calendário de Corridas");
+        jMenuItemImportarCalendarioDeCorridas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemImportarCalendarioDeCorridasActionPerformed(evt);
+            }
+        });
+        jMenuArquivo.add(jMenuItemImportarCalendarioDeCorridas);
+
+        jMenuItemImportarResultadoDeCorrida.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemImportarResultadoDeCorrida.setText("Importar Resultado de Corrida");
+        jMenuItemImportarResultadoDeCorrida.setEnabled(false);
+        jMenuItemImportarResultadoDeCorrida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemImportarResultadoDeCorridaActionPerformed(evt);
+            }
+        });
+        jMenuArquivo.add(jMenuItemImportarResultadoDeCorrida);
+
+        jMenuBarPrincipal.add(jMenuArquivo);
+
+        setJMenuBar(jMenuBarPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jTabbedPanePrincipal)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jTabbedPanePrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonImportarPilotosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarPilotosActionPerformed
-        
+    private void jMenuItemImportarPilotosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemImportarPilotosActionPerformed
         //Exibir caixa de diálogo
         JFileChooser fileChooser = new JFileChooser();
         int retorno = fileChooser.showOpenDialog(null);
@@ -155,19 +224,25 @@ public class Interface extends javax.swing.JFrame {
         if(retorno == JFileChooser.APPROVE_OPTION){
             //Verificar se os pilotos já foram importados, confirmar e efetuar importação
             if(ManterCampeonato.pilotosJaForamImportados()){
-                int confirma = JOptionPane.showOptionDialog(jPanel1, "Os pilotos já foram importados uma vez. Deseja sobrescrever os dados?", "Confirmação de Importação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                int confirma = JOptionPane.showOptionDialog(jPanelClassificacaoDePilototosPorCorrida, "Os pilotos já foram importados uma vez. Deseja sobrescrever os dados?", "Confirmação de Importação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if(confirma == JOptionPane.YES_OPTION){
-                    ManterCampeonato.importarPilotos(fileChooser.getSelectedFile());
+                    if(ManterCampeonato.resultadoDeCorridaJaFoiImportado()){
+                        confirma = JOptionPane.showOptionDialog(jPanelClassificacaoDePilototosPorCorrida, "Os resultados de corridas já importados serão perdidos. Deseja realmente sobrescrever os dados?", "Confirmação de Importação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                        if(confirma == JOptionPane.YES_OPTION){
+                            ManterCampeonato.importarPilotos(fileChooser.getSelectedFile());
+                        }
+                    }else{
+                        ManterCampeonato.importarPilotos(fileChooser.getSelectedFile());
+                    }
                 }
             }else{
                 ManterCampeonato.importarPilotos(fileChooser.getSelectedFile());
             }
         }
         habilitarBotaoDeImportacaoDeResultados();
-        
-    }//GEN-LAST:event_jButtonImportarPilotosActionPerformed
+    }//GEN-LAST:event_jMenuItemImportarPilotosActionPerformed
 
-    private void jButtonImportarCalendarioDeCorridasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarCalendarioDeCorridasActionPerformed
+    private void jMenuItemImportarCalendarioDeCorridasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemImportarCalendarioDeCorridasActionPerformed
         //Exibir caixa de diálogo
         JFileChooser fileChooser = new JFileChooser();
         int retorno = fileChooser.showOpenDialog(null);
@@ -175,25 +250,32 @@ public class Interface extends javax.swing.JFrame {
         if(retorno == JFileChooser.APPROVE_OPTION){
             //Verificar se o calendário já foi importado,confirmar e efetuar importação
             if(ManterCampeonato.calendarioDeCorridasJaFoiImportado()){
-                int confirma = JOptionPane.showOptionDialog(jPanel1, "O calendário de corridas já foi importado uma vez. Deseja sobrescrever os dados?", "Confirmação de Importação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                int confirma = JOptionPane.showOptionDialog(jPanelClassificacaoDePilototosPorCorrida, "O calendário de corridas já foi importado uma vez. Deseja sobrescrever os dados?", "Confirmação de Importação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if(confirma == JOptionPane.YES_OPTION){
-                    ManterCampeonato.importarCalendarioDeCorridas(fileChooser.getSelectedFile());
+                    if(ManterCampeonato.resultadoDeCorridaJaFoiImportado()){
+                        confirma = JOptionPane.showOptionDialog(jPanelClassificacaoDePilototosPorCorrida, "Os resultados de corridas já importados serão perdidos. Deseja realmente sobrescrever os dados?", "Confirmação de Importação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                        if(confirma == JOptionPane.YES_OPTION){
+                            ManterCampeonato.importarCalendarioDeCorridas(fileChooser.getSelectedFile());
+                        }
+                    }else{
+                        ManterCampeonato.importarCalendarioDeCorridas(fileChooser.getSelectedFile());
+                    }
                 }
             }else{
                 ManterCampeonato.importarCalendarioDeCorridas(fileChooser.getSelectedFile());
             }
         }
         habilitarBotaoDeImportacaoDeResultados();
-    }//GEN-LAST:event_jButtonImportarCalendarioDeCorridasActionPerformed
+    }//GEN-LAST:event_jMenuItemImportarCalendarioDeCorridasActionPerformed
 
-    private void jButtonImportarResultadoDeCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarResultadoDeCorridaActionPerformed
+    private void jMenuItemImportarResultadoDeCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemImportarResultadoDeCorridaActionPerformed
         //Exibir caixa de diálogo
         JFileChooser fileChooser = new JFileChooser();
         int retorno = fileChooser.showOpenDialog(null);
         //Efetuar importação
         if(retorno == JFileChooser.APPROVE_OPTION){
             if(ManterCampeonato.resultadoDeCorridaJaFoiImportado(fileChooser.getSelectedFile())){
-                int confirma = JOptionPane.showOptionDialog(jPanel1, "O resultado desta corrida já foi importado uma vez. Deseja sobrescrever os dados?", "Confirmação de Importação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                int confirma = JOptionPane.showOptionDialog(jPanelClassificacaoDePilototosPorCorrida, "O resultado desta corrida já foi importado uma vez. Deseja sobrescrever os dados?", "Confirmação de Importação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if(confirma == JOptionPane.YES_OPTION){
                     ManterCampeonato.importarResultadoDeCorrida(fileChooser.getSelectedFile());
                 }
@@ -201,19 +283,11 @@ public class Interface extends javax.swing.JFrame {
                 ManterCampeonato.importarResultadoDeCorrida(fileChooser.getSelectedFile());
             }
         }
-    }//GEN-LAST:event_jButtonImportarResultadoDeCorridaActionPerformed
+    }//GEN-LAST:event_jMenuItemImportarResultadoDeCorridaActionPerformed
 
-    private void jButtonVisualizarClassificacaoGeralDePilotosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisualizarClassificacaoGeralDePilotosActionPerformed
+    private void jComboBoxCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCorridaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonVisualizarClassificacaoGeralDePilotosActionPerformed
-
-    private void jButtonImportarCalendarioDeCorridas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarCalendarioDeCorridas1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonImportarCalendarioDeCorridas1ActionPerformed
-
-    private void jButtonImportarResultadoDeCorrida1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarResultadoDeCorrida1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonImportarResultadoDeCorrida1ActionPerformed
+    }//GEN-LAST:event_jComboBoxCorridaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -250,22 +324,26 @@ public class Interface extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonImportarCalendarioDeCorridas;
-    private javax.swing.JButton jButtonImportarCalendarioDeCorridas1;
-    private javax.swing.JButton jButtonImportarPilotos;
-    private javax.swing.JButton jButtonImportarResultadoDeCorrida;
-    private javax.swing.JButton jButtonImportarResultadoDeCorrida1;
-    private javax.swing.JButton jButtonVisualizarClassificacaoGeralDePilotos;
+    private javax.swing.JComboBox jComboBoxCorrida;
     private javax.swing.JMenu jMenuArquivo;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenu jMenuSair;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenuBar jMenuBarPrincipal;
+    private javax.swing.JMenuItem jMenuItemImportarCalendarioDeCorridas;
+    private javax.swing.JMenuItem jMenuItemImportarPilotos;
+    private javax.swing.JMenuItem jMenuItemImportarResultadoDeCorrida;
+    private javax.swing.JPanel jPanelClassificacaoDePilototosPorCorrida;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPaneClassificacaoGeralDeEquipes;
+    private javax.swing.JScrollPane jScrollPaneClassificacaoGeralDePilotos;
+    private javax.swing.JTabbedPane jTabbedPanePrincipal;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableClassificacaoGeralDeEquipes;
+    private javax.swing.JTable jTableClassificacaoGeralDePilotos;
     // End of variables declaration//GEN-END:variables
 
     private void habilitarBotaoDeImportacaoDeResultados() {
         //Habilidar botão de importação de resultados
         if(ManterCampeonato.pilotosJaForamImportados() && ManterCampeonato.calendarioDeCorridasJaFoiImportado()){
-            jButtonImportarResultadoDeCorrida.setEnabled(true);
+            jMenuItemImportarResultadoDeCorrida.setEnabled(true);
         }
     }
 }

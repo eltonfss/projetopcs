@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JTable;
 import model.Campeonato;
 import model.Carro;
 import model.Corrida;
@@ -363,6 +364,31 @@ public class ManterCampeonato {
     }
     
     /**
+     * verifica se algum arquivo de resultado da corrida já foi importado na base de dados
+     * @return 
+     */
+    public static boolean resultadoDeCorridaJaFoiImportado(){
+        try{
+            if(calendarioDeCorridasJaFoiImportado()){
+                //Obtem list de corridas do campeonato
+                List<Corrida> corridas = campeonato.getCorridas();
+                //Verifica se existe algum resultado instanciado
+                for (Corrida corrida : corridas) {
+                    if(corrida.getResultado() != null){
+                        return true;
+                    }
+                }
+            }else{
+                throw new Exception("Calendário de corridas ainda não foi importado!");
+            }
+            return false;
+       }catch(Exception e){
+           e.printStackTrace();
+           return false;
+       }
+    }
+    
+    /**
      * UC - Importar Resultado de Corrida
      * @param arquivoDeEntrada 
      */
@@ -394,4 +420,36 @@ public class ManterCampeonato {
        }
     }
    
+    public static JTable visualizarClassificacaoGeralDePilotos(){
+        JTable tabelaDeClassificacao = new JTable(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Posição", "Nome", "Equipe", "Pontos"
+            }
+        ));
+        if(instanciarCampeonatoExistente()){
+            if(pilotosJaForamImportados() && calendarioDeCorridasJaFoiImportado() && resultadoDeCorridaJaFoiImportado()){
+                List<Piloto> pilotos = campeonato.getPilotos();
+                List<Corrida> corridas = campeonato.getCorridas();
+                Resultado resultadoDaCorrida;
+                for (Corrida corrida : corridas) {
+                    visualizarClassificacaoDePilotosPorCorrida(corrida);
+                }
+             }
+        }
+        return null;
+    }
+
+    private static void visualizarClassificacaoDePilotosPorCorrida(Corrida corrida) {
+        Resultado resultadoDaCorrida;
+        resultadoDaCorrida = corrida.getResultado();
+        if(resultadoDaCorrida != null){
+            for(Posicao posicao : resultadoDaCorrida.getPosicoes()){
+                
+            }
+        }
+    }
+    
 }

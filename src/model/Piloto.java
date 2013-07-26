@@ -12,6 +12,7 @@ public class Piloto implements Serializable{
     
     private String nome;
     private Carro carro;
+    private Integer pontuacao;
 
     /**
      * Construtor vazio
@@ -57,5 +58,7 @@ public class Piloto implements Serializable{
     public void setCarro(Carro carro) {
         this.carro = carro;
     }
+    
+    
     
 }
