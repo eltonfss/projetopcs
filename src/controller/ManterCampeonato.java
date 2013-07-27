@@ -19,6 +19,9 @@ import model.Equipe;
 import model.Piloto;
 import model.Posicao;
 import model.Resultado;
+import view.ClassificacaoDePilotosPorCorridaTableModel;
+import view.ClassificacaoGeralDePilotosTableModel;
+import view.CorridasComboBoxModel;
 
 /**
  * @author elton
@@ -378,8 +381,6 @@ public class ManterCampeonato {
                         return true;
                     }
                 }
-            }else{
-                throw new Exception("Calendário de corridas ainda não foi importado!");
             }
             return false;
        }catch(Exception e){
@@ -420,36 +421,92 @@ public class ManterCampeonato {
        }
     }
    
-    public static JTable visualizarClassificacaoGeralDePilotos(){
-        JTable tabelaDeClassificacao = new JTable(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Posição", "Nome", "Equipe", "Pontos"
-            }
-        ));
-        if(instanciarCampeonatoExistente()){
-            if(pilotosJaForamImportados() && calendarioDeCorridasJaFoiImportado() && resultadoDeCorridaJaFoiImportado()){
-                List<Piloto> pilotos = campeonato.getPilotos();
-                List<Corrida> corridas = campeonato.getCorridas();
-                Resultado resultadoDaCorrida;
-                for (Corrida corrida : corridas) {
-                    visualizarClassificacaoDePilotosPorCorrida(corrida);
-                }
-             }
-        }
-        return null;
-    }
-
-    private static void visualizarClassificacaoDePilotosPorCorrida(Corrida corrida) {
-        Resultado resultadoDaCorrida;
-        resultadoDaCorrida = corrida.getResultado();
-        if(resultadoDaCorrida != null){
-            for(Posicao posicao : resultadoDaCorrida.getPosicoes()){
-                
-            }
-        }
+    public static CorridasComboBoxModel getCorridasComboBoxModel(){
+        return new CorridasComboBoxModel(getNumerosDeCorridasComResultado());
     }
     
+    public static ClassificacaoGeralDePilotosTableModel getClassificacaoGeralDePilotosTableModel(){
+        return new ClassificacaoGeralDePilotosTableModel(pontuarPilotos());
+    }
+
+    public static ClassificacaoDePilotosPorCorridaTableModel getClassificacaoDePilotosPorCorridaTableModel(Integer numeroDaCorrida) {
+        return new ClassificacaoDePilotosPorCorridaTableModel(pontuarPilotos(numeroDaCorrida));
+    }
+
+    private static List<Piloto> pontuarPilotos(){
+        Resultado resultado = null;
+        List<Piloto> valores = new ArrayList<Piloto>();
+        if(resultadoDeCorridaJaFoiImportado()){
+            valores = campeonato.getPilotos();
+            for(Corrida corrida : campeonato.getCorridas()){
+                resultado = corrida.getResultado();
+                if(resultado !=  null){
+                    if(resultado.getNumeroDeVoltasRealizadas() > 1){
+                        if(resultado.getNumeroDeVoltasRealizadas() >= corrida.getNumeroDeVoltasPrevistas()*0.75){
+                            for (Posicao posicao : resultado.getPosicoes()) {
+                                Double[] pontuacao = {25.0,18.0,15.0,12.0,10.0,8.0,6.0,4.0,2.0,1.0};
+                                pontuarPiloto(valores, posicao,pontuacao);
+                            }
+                        }else{
+                            for (Posicao posicao : resultado.getPosicoes()) {
+                                Double[] pontuacao = {12.5,9.0,7.5,6.0,5.0,4.0,3.0,2.0,1.0,0.5};
+                                pontuarPiloto(valores, posicao,pontuacao);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return valores;
+    }
+    
+    private static List<Piloto> pontuarPilotos(Integer numeroDaCorrida) {
+        Resultado resultado = null;
+        List<Piloto> valores = null;
+        if(resultadoDeCorridaJaFoiImportado()){
+            valores = campeonato.getPilotos();
+            for(Corrida corrida : campeonato.getCorridas()){
+                if(corrida.getNumeroDaCorrida().equals(numeroDaCorrida)){
+                    resultado = corrida.getResultado();
+                    resultado.setCorrida(corrida);
+                }
+            }
+        }
+        if(resultado !=  null){
+            if(resultado.getNumeroDeVoltasRealizadas() > 1){
+                if(resultado.getNumeroDeVoltasRealizadas() > resultado.getCorrida().getNumeroDeVoltasPrevistas()*0.75){
+                    for (Posicao posicao : resultado.getPosicoes()) {
+                        Double[] pontuacao = {25.0,18.0,15.0,12.0,10.0,8.0,6.0,4.0,2.0,1.0};
+                        valores = pontuarPiloto(valores, posicao,pontuacao);
+                    }
+                }else{
+                    for (Posicao posicao : resultado.getPosicoes()) {
+                        Double[] pontuacao = {12.5,9.0,7.5,6.0,5.0,4.0,3.0,2.0,1.0,0.5};
+                        valores = pontuarPiloto(valores, posicao,pontuacao);
+                    }
+                }
+            }
+        }
+        return valores;
+    }
+    
+    private static List<Integer> getNumerosDeCorridasComResultado(){
+        List<Integer> numerosDeCorridasComResultados = new ArrayList<Integer>();
+        for (Corrida corrida : campeonato.getCorridas()) {
+            if(corrida.getResultado() != null){
+                numerosDeCorridasComResultados.add(corrida.getNumeroDaCorrida());
+            }
+        }
+        return numerosDeCorridasComResultados;
+    }
+
+    private static List<Piloto> pontuarPiloto(List<Piloto> valores, Posicao posicao,Double[] pontuacao) {
+        for (Piloto piloto : valores) {
+            if(piloto.getCarro().getNumero().equals(posicao.getCarro().getNumero())){
+                piloto.setPontuacao(piloto.getPontuacao()+pontuacao[posicao.getNumero()-1]);
+            }
+        }
+        return valores;
+    }
+
 }

@@ -20,6 +20,9 @@ public class Interface extends javax.swing.JFrame {
     public Interface() {
         initComponents();
         habilitarBotaoDeImportacaoDeResultados();
+        atualizarClassificacaoGeralDePilotos();
+        atualizarResultadosDeCorridas();
+        atualizarClassificacaoDePilotosPorCorrida();
     }
 
     /**
@@ -39,7 +42,7 @@ public class Interface extends javax.swing.JFrame {
         jPanelClassificacaoDePilototosPorCorrida = new javax.swing.JPanel();
         jComboBoxCorrida = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableClassificacaoDePilotosPorCorrida = new javax.swing.JTable();
         jMenuBarPrincipal = new javax.swing.JMenuBar();
         jMenuArquivo = new javax.swing.JMenu();
         jMenuItemImportarPilotos = new javax.swing.JMenuItem();
@@ -47,6 +50,7 @@ public class Interface extends javax.swing.JFrame {
         jMenuItemImportarResultadoDeCorrida = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jTableClassificacaoGeralDePilotos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -73,9 +77,13 @@ public class Interface extends javax.swing.JFrame {
         });
         jScrollPaneClassificacaoGeralDePilotos.setViewportView(jTableClassificacaoGeralDePilotos);
         jTableClassificacaoGeralDePilotos.getColumnModel().getColumn(0).setResizable(false);
+        jTableClassificacaoGeralDePilotos.getColumnModel().getColumn(0).setHeaderValue("Posição");
         jTableClassificacaoGeralDePilotos.getColumnModel().getColumn(1).setResizable(false);
+        jTableClassificacaoGeralDePilotos.getColumnModel().getColumn(1).setHeaderValue("Nome");
         jTableClassificacaoGeralDePilotos.getColumnModel().getColumn(2).setResizable(false);
+        jTableClassificacaoGeralDePilotos.getColumnModel().getColumn(2).setHeaderValue("Equipe");
         jTableClassificacaoGeralDePilotos.getColumnModel().getColumn(3).setResizable(false);
+        jTableClassificacaoGeralDePilotos.getColumnModel().getColumn(3).setHeaderValue("Pontos");
 
         jTabbedPanePrincipal.addTab("Classificação Geral de Pilotos", jScrollPaneClassificacaoGeralDePilotos);
 
@@ -116,7 +124,7 @@ public class Interface extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableClassificacaoDePilotosPorCorrida.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -139,11 +147,11 @@ public class Interface extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getColumn(0).setResizable(false);
-        jTable1.getColumnModel().getColumn(1).setResizable(false);
-        jTable1.getColumnModel().getColumn(2).setResizable(false);
-        jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jScrollPane1.setViewportView(jTableClassificacaoDePilotosPorCorrida);
+        jTableClassificacaoDePilotosPorCorrida.getColumnModel().getColumn(0).setResizable(false);
+        jTableClassificacaoDePilotosPorCorrida.getColumnModel().getColumn(1).setResizable(false);
+        jTableClassificacaoDePilotosPorCorrida.getColumnModel().getColumn(2).setResizable(false);
+        jTableClassificacaoDePilotosPorCorrida.getColumnModel().getColumn(3).setResizable(false);
 
         javax.swing.GroupLayout jPanelClassificacaoDePilototosPorCorridaLayout = new javax.swing.GroupLayout(jPanelClassificacaoDePilototosPorCorrida);
         jPanelClassificacaoDePilototosPorCorrida.setLayout(jPanelClassificacaoDePilototosPorCorridaLayout);
@@ -152,8 +160,8 @@ public class Interface extends javax.swing.JFrame {
             .addGroup(jPanelClassificacaoDePilototosPorCorridaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelClassificacaoDePilototosPorCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
-                    .addComponent(jComboBoxCorrida, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jComboBoxCorrida, 0, 432, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelClassificacaoDePilototosPorCorridaLayout.setVerticalGroup(
@@ -240,6 +248,8 @@ public class Interface extends javax.swing.JFrame {
             }
         }
         habilitarBotaoDeImportacaoDeResultados();
+        atualizarClassificacaoGeralDePilotos();
+        atualizarResultadosDeCorridas();
     }//GEN-LAST:event_jMenuItemImportarPilotosActionPerformed
 
     private void jMenuItemImportarCalendarioDeCorridasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemImportarCalendarioDeCorridasActionPerformed
@@ -266,6 +276,8 @@ public class Interface extends javax.swing.JFrame {
             }
         }
         habilitarBotaoDeImportacaoDeResultados();
+        atualizarClassificacaoGeralDePilotos();
+        atualizarResultadosDeCorridas();
     }//GEN-LAST:event_jMenuItemImportarCalendarioDeCorridasActionPerformed
 
     private void jMenuItemImportarResultadoDeCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemImportarResultadoDeCorridaActionPerformed
@@ -283,10 +295,12 @@ public class Interface extends javax.swing.JFrame {
                 ManterCampeonato.importarResultadoDeCorrida(fileChooser.getSelectedFile());
             }
         }
+        atualizarClassificacaoGeralDePilotos();
+        atualizarResultadosDeCorridas();
     }//GEN-LAST:event_jMenuItemImportarResultadoDeCorridaActionPerformed
 
     private void jComboBoxCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCorridaActionPerformed
-        // TODO add your handling code here:
+        atualizarClassificacaoDePilotosPorCorrida();
     }//GEN-LAST:event_jComboBoxCorridaActionPerformed
 
     /**
@@ -335,7 +349,7 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPaneClassificacaoGeralDeEquipes;
     private javax.swing.JScrollPane jScrollPaneClassificacaoGeralDePilotos;
     private javax.swing.JTabbedPane jTabbedPanePrincipal;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableClassificacaoDePilotosPorCorrida;
     private javax.swing.JTable jTableClassificacaoGeralDeEquipes;
     private javax.swing.JTable jTableClassificacaoGeralDePilotos;
     // End of variables declaration//GEN-END:variables
@@ -345,5 +359,17 @@ public class Interface extends javax.swing.JFrame {
         if(ManterCampeonato.pilotosJaForamImportados() && ManterCampeonato.calendarioDeCorridasJaFoiImportado()){
             jMenuItemImportarResultadoDeCorrida.setEnabled(true);
         }
+    }
+
+    private void atualizarClassificacaoGeralDePilotos() {
+        jTableClassificacaoGeralDePilotos.setModel(ManterCampeonato.getClassificacaoGeralDePilotosTableModel());
+    }
+
+    private void atualizarResultadosDeCorridas() {
+        jComboBoxCorrida.setModel(ManterCampeonato.getCorridasComboBoxModel());
+    }
+
+    private void atualizarClassificacaoDePilotosPorCorrida() {
+        jTableClassificacaoDePilotosPorCorrida.setModel(ManterCampeonato.getClassificacaoDePilotosPorCorridaTableModel((Integer)jComboBoxCorrida.getSelectedItem()));
     }
 }

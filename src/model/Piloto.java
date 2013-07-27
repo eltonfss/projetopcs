@@ -1,34 +1,34 @@
 package model;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 /**
  * @author elton
  */
-public class Piloto implements Serializable{
+public class Piloto implements Serializable, Comparable<Piloto>{
     
     private String nome;
     private Carro carro;
-    private Integer pontuacao;
+    private Double pontuacao;
 
     /**
      * Construtor vazio
      */
     public Piloto() {
         nome = "";
+        pontuacao = 0.0;
     }
 
     /**
      * Construtor parametrizado
      * @param nome
      * @param carro 
+     * @param pontuacao
      */
-    public Piloto(String nome, Carro carro) {
+    public Piloto(String nome, Carro carro,Double pontuacao) {
         this.nome = nome;
         this.carro = carro;
+        this.pontuacao = pontuacao;
     }
     
     /**
@@ -58,7 +58,30 @@ public class Piloto implements Serializable{
     public void setCarro(Carro carro) {
         this.carro = carro;
     }
-    
-    
+
+    /**
+     * @return the pontuacao
+     */
+    public Double getPontuacao() {
+        return pontuacao;
+    }
+
+    /**
+     * @param pontuacao the pontuacao to set
+     */
+    public void setPontuacao(Double pontuacao) {
+        this.pontuacao = pontuacao;
+    }
+
+    @Override
+    public int compareTo(Piloto o) {
+        if(pontuacao > o.getPontuacao()){
+            return -1;
+        }else if(pontuacao < o.getPontuacao()){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
     
 }

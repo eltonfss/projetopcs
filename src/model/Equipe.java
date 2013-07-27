@@ -8,16 +8,18 @@ import java.io.Serializable;
 /**
  * @author notle
  */
-public class Equipe implements Serializable{
+public class Equipe implements Serializable, Comparable<Equipe>{
     
     private String nome;
     private Carro carro;
+    private Integer pontuacao;
 
     /**
      * Construtor vazio
      */
     public Equipe() {
         nome = "";
+        pontuacao = 0;
     }
 
     /**
@@ -56,6 +58,25 @@ public class Equipe implements Serializable{
      */
     public void setCarro(Carro carro) {
         this.carro = carro;
+    }
+
+    public Integer getPontuacao() {
+        return pontuacao;
+    }
+
+    public void setPontuacao(Integer pontuacao) {
+        this.pontuacao = pontuacao;
+    }
+
+    @Override
+    public int compareTo(Equipe o) {
+        if(pontuacao > o.getPontuacao()){
+            return -1;
+        }else if(pontuacao < o.getPontuacao()){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 
 }
