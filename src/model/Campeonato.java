@@ -9,52 +9,32 @@ import java.io.*;
 public class Campeonato implements Serializable{
 
     private List<Corrida> corridas;
-    private List<Piloto> pilotos;
+    private List<Equipe> equipes;
       
-    /**
-     * Construtor vazio
-     */
     public Campeonato() {
         corridas = new ArrayList<Corrida>();
-        pilotos = new ArrayList<Piloto>();
+        equipes = new ArrayList<Equipe>();
     }
 
-    /**
-     * Construtor parametrizado
-     * @param corridas
-     * @param pilotos 
-     */
-    public Campeonato(List<Corrida> corridas, List<Piloto> pilotos) {
+    public Campeonato(List<Corrida> corridas, List<Equipe> equipes) {
         this.corridas = corridas;
-        this.pilotos = pilotos;
+        this.equipes = equipes;
     }
     
-    /**
-     * @return the corridas
-     */
     public List<Corrida> getCorridas() {
         return corridas;
     }
 
-    /**
-     * @param corridas the corridas to set
-     */
     public void setCorridas(List<Corrida> corridas) {
         this.corridas = corridas;
     }
 
-    /**
-     * @return the pilotos
-     */
-    public List<Piloto> getPilotos() {
-        return pilotos;
+    public List<Equipe> getEquipes() {
+        return equipes;
     }
 
-    /**
-     * @param pilotos the pilotos to set
-     */
-    public void setPilotos(List<Piloto> pilotos) {
-        this.pilotos = pilotos;
+    public void setEquipes(List<Equipe> equipes) {
+        this.equipes = equipes;
     }
 
 }

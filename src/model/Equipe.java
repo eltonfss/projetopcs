@@ -1,9 +1,12 @@
 package model;
 
+import java.awt.geom.Arc2D;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author notle
@@ -11,60 +14,60 @@ import java.io.Serializable;
 public class Equipe implements Serializable, Comparable<Equipe>{
     
     private String nome;
-    private Carro carro;
-    private Integer pontuacao;
+    private Carro carro1;
+    private Carro carro2;
+    private Double pontuacao;
+    private List<Integer> numeroDeColocacoesPorPosicao;
 
-    /**
-     * Construtor vazio
-     */
     public Equipe() {
         nome = "";
-        pontuacao = 0;
-    }
-
-    /**
-     * Construtor parametrizado
-     * @param nome
-     * @param carro 
-     */
-    public Equipe(String nome, Carro carro) {
-        this.nome = nome;
-        this.carro = carro;
+        pontuacao = 0.0;
+        numeroDeColocacoesPorPosicao = new ArrayList<Integer>();
     }
     
-    /**
-     * @return the nome
-     */
+    public Equipe(String nome, Carro carro1, Carro carro2) {
+        this.nome = nome;
+        this.carro1 = carro1;
+        this.carro2 = carro2;
+    }
+
+    public List<Integer> getColocacoes() {
+        return numeroDeColocacoesPorPosicao;
+    }
+
+    public void setColocacoes(List<Integer> colocacoes) {
+        this.numeroDeColocacoesPorPosicao = colocacoes;
+    }
+    
     public String getNome() {
         return nome;
     }
 
-    /**
-     * @param nome the nome to set
-     */
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    /**
-     * @return the carro
-     */
-    public Carro getCarro() {
-        return carro;
+    public Carro getCarro1() {
+        return carro1;
     }
 
-    /**
-     * @param carro the carro to set
-     */
-    public void setCarro(Carro carro) {
-        this.carro = carro;
+    public void setCarro1(Carro carro1) {
+        this.carro1 = carro1;
     }
 
-    public Integer getPontuacao() {
+    public Carro getCarro2() {
+        return carro2;
+    }
+
+    public void setCarro2(Carro carro2) {
+        this.carro2 = carro2;
+    }
+
+    public Double getPontuacao() {
         return pontuacao;
     }
 
-    public void setPontuacao(Integer pontuacao) {
+    public void setPontuacao(Double pontuacao) {
         this.pontuacao = pontuacao;
     }
 
@@ -75,7 +78,23 @@ public class Equipe implements Serializable, Comparable<Equipe>{
         }else if(pontuacao < o.getPontuacao()){
             return 1;
         }else{
-            return 0;
+            Integer posicao = 1;
+            while(posicao <= numeroDeColocacoesPorPosicao.size() && posicao <=o.getColocacoes().size()){
+                if(numeroDeColocacoesPorPosicao.get(posicao-1) > o.getColocacoes().get(posicao-1)){
+                    return -1;
+                }else if(numeroDeColocacoesPorPosicao.get(posicao-1) < o.getColocacoes().get(posicao-1)){
+                    return 1;
+                }else{
+                    posicao++;
+                }
+            }
+            if(numeroDeColocacoesPorPosicao.size() < o.getColocacoes().size()){
+                return 1;
+            }else if(numeroDeColocacoesPorPosicao.size() > o.getColocacoes().size()){
+                return -1;
+            }else{
+                return 0;
+            }
         }
     }
 

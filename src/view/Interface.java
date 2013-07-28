@@ -23,6 +23,7 @@ public class Interface extends javax.swing.JFrame {
         atualizarClassificacaoGeralDePilotos();
         atualizarResultadosDeCorridas();
         atualizarClassificacaoDePilotosPorCorrida();
+        atualizarClassificacaoGeralDeEquipes();
     }
 
     /**
@@ -117,7 +118,6 @@ public class Interface extends javax.swing.JFrame {
 
         jTabbedPanePrincipal.addTab("Classificação Geral de Equipes", jScrollPaneClassificacaoGeralDeEquipes);
 
-        jComboBoxCorrida.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxCorrida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxCorridaActionPerformed(evt);
@@ -231,25 +231,27 @@ public class Interface extends javax.swing.JFrame {
         //Efetuar importação
         if(retorno == JFileChooser.APPROVE_OPTION){
             //Verificar se os pilotos já foram importados, confirmar e efetuar importação
-            if(ManterCampeonato.pilotosJaForamImportados()){
+            if(ManterCampeonato.equipesJaForamImportadas()){
                 int confirma = JOptionPane.showOptionDialog(jPanelClassificacaoDePilototosPorCorrida, "Os pilotos já foram importados uma vez. Deseja sobrescrever os dados?", "Confirmação de Importação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if(confirma == JOptionPane.YES_OPTION){
                     if(ManterCampeonato.resultadoDeCorridaJaFoiImportado()){
                         confirma = JOptionPane.showOptionDialog(jPanelClassificacaoDePilototosPorCorrida, "Os resultados de corridas já importados serão perdidos. Deseja realmente sobrescrever os dados?", "Confirmação de Importação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                         if(confirma == JOptionPane.YES_OPTION){
-                            ManterCampeonato.importarPilotos(fileChooser.getSelectedFile());
+                            ManterCampeonato.importarEquipes(fileChooser.getSelectedFile());
                         }
                     }else{
-                        ManterCampeonato.importarPilotos(fileChooser.getSelectedFile());
+                        ManterCampeonato.importarEquipes(fileChooser.getSelectedFile());
                     }
                 }
             }else{
-                ManterCampeonato.importarPilotos(fileChooser.getSelectedFile());
+                ManterCampeonato.importarEquipes(fileChooser.getSelectedFile());
             }
         }
         habilitarBotaoDeImportacaoDeResultados();
         atualizarClassificacaoGeralDePilotos();
         atualizarResultadosDeCorridas();
+        atualizarClassificacaoDePilotosPorCorrida();
+        atualizarClassificacaoGeralDeEquipes();
     }//GEN-LAST:event_jMenuItemImportarPilotosActionPerformed
 
     private void jMenuItemImportarCalendarioDeCorridasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemImportarCalendarioDeCorridasActionPerformed
@@ -278,6 +280,8 @@ public class Interface extends javax.swing.JFrame {
         habilitarBotaoDeImportacaoDeResultados();
         atualizarClassificacaoGeralDePilotos();
         atualizarResultadosDeCorridas();
+        atualizarClassificacaoDePilotosPorCorrida();
+        atualizarClassificacaoGeralDeEquipes();
     }//GEN-LAST:event_jMenuItemImportarCalendarioDeCorridasActionPerformed
 
     private void jMenuItemImportarResultadoDeCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemImportarResultadoDeCorridaActionPerformed
@@ -297,6 +301,8 @@ public class Interface extends javax.swing.JFrame {
         }
         atualizarClassificacaoGeralDePilotos();
         atualizarResultadosDeCorridas();
+        atualizarClassificacaoDePilotosPorCorrida();
+        atualizarClassificacaoGeralDeEquipes();
     }//GEN-LAST:event_jMenuItemImportarResultadoDeCorridaActionPerformed
 
     private void jComboBoxCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCorridaActionPerformed
@@ -356,7 +362,7 @@ public class Interface extends javax.swing.JFrame {
 
     private void habilitarBotaoDeImportacaoDeResultados() {
         //Habilidar botão de importação de resultados
-        if(ManterCampeonato.pilotosJaForamImportados() && ManterCampeonato.calendarioDeCorridasJaFoiImportado()){
+        if(ManterCampeonato.equipesJaForamImportadas()&& ManterCampeonato.calendarioDeCorridasJaFoiImportado()){
             jMenuItemImportarResultadoDeCorrida.setEnabled(true);
         }
     }
@@ -366,10 +372,18 @@ public class Interface extends javax.swing.JFrame {
     }
 
     private void atualizarResultadosDeCorridas() {
-        jComboBoxCorrida.setModel(ManterCampeonato.getCorridasComboBoxModel());
+        if(ManterCampeonato.resultadoDeCorridaJaFoiImportado()){
+            jComboBoxCorrida.setModel(ManterCampeonato.getCorridasComboBoxModel());
+        }
     }
 
     private void atualizarClassificacaoDePilotosPorCorrida() {
-        jTableClassificacaoDePilotosPorCorrida.setModel(ManterCampeonato.getClassificacaoDePilotosPorCorridaTableModel((Integer)jComboBoxCorrida.getSelectedItem()));
+        if(ManterCampeonato.resultadoDeCorridaJaFoiImportado()){
+            jTableClassificacaoDePilotosPorCorrida.setModel(ManterCampeonato.getClassificacaoDePilotosPorCorridaTableModel((Integer)jComboBoxCorrida.getSelectedItem()));
+        }
+    }
+
+    private void atualizarClassificacaoGeralDeEquipes() {
+        jTableClassificacaoGeralDeEquipes.setModel(ManterCampeonato.getClassificacaoGeralDeEquipesTableModel());
     }
 }

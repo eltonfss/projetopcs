@@ -9,7 +9,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import javax.swing.JTable;
 import model.Campeonato;
@@ -21,11 +23,9 @@ import model.Posicao;
 import model.Resultado;
 import view.ClassificacaoDePilotosPorCorridaTableModel;
 import view.ClassificacaoGeralDePilotosTableModel;
+import view.ClassificacaoGeralDeEquipesTableModel;
 import view.CorridasComboBoxModel;
 
-/**
- * @author elton
- */
 public class ManterCampeonato {
 
     private static Campeonato campeonato;
@@ -33,18 +33,11 @@ public class ManterCampeonato {
     private static XMLEncoder xmlEncoder;
     private static final String PATH_BASE_DE_DADOS = "src/F1.XML";
 
-    /**
-     * Instanciar novo campeonato
-     */
     private static boolean instanciarNovoCampeonato(){
         campeonato = new Campeonato();
         return true;
     }
     
-    /**
-     * Instanciar campeonato existente a partir de uma baseDeDados(F1.XML)
-     * @param baseDeDados 
-     */
     private static boolean instanciarCampeonatoExistente(){
        try{
            xmlDecoder = new XMLDecoder(new FileInputStream(PATH_BASE_DE_DADOS));
@@ -62,12 +55,6 @@ public class ManterCampeonato {
        }
     }
        
-    /**
-     * Persistir campeonato na base de dados
-     * @param baseDeDados
-     * @return
-     * @throws FileNotFoundException 
-     */
     private static boolean persistirCampeonato()throws FileNotFoundException{
        try{
             xmlEncoder = new XMLEncoder(new FileOutputStream(PATH_BASE_DE_DADOS));
@@ -102,7 +89,6 @@ public class ManterCampeonato {
      * @throws Exception
      */
     private static List<Corrida> lerCalendarioDeCorridas(File arquivoDeEntrada) throws Exception{
-        
         List<Corrida> corridas = new ArrayList<Corrida>();
         BufferedReader reader = new BufferedReader(new FileReader(arquivoDeEntrada));
         //Lê a primeira linha do arquivo
@@ -145,7 +131,6 @@ public class ManterCampeonato {
         try{
             if(instanciarCampeonatoExistente()){
                 corridas = campeonato.getCorridas();
-                
                 if(!corridas.isEmpty()){
                     corridas.clear();
                 }
@@ -177,9 +162,9 @@ public class ManterCampeonato {
      * verifica se o arquivo de pilotos já foi importado na base de dados
      * @return 
      */
-    public static boolean pilotosJaForamImportados(){
+    public static boolean equipesJaForamImportadas(){
         if(instanciarCampeonatoExistente()){
-            if(campeonato.getPilotos().isEmpty()){
+            if(campeonato.getEquipes().isEmpty()){
                 return false;
             }else{
                 return true;
@@ -195,8 +180,8 @@ public class ManterCampeonato {
      * @return
      * @throws Exception 
      */
-    private static List<Piloto> lerPilotos(File arquivoDeEntrada) throws Exception{
-        List<Piloto> pilotos = new ArrayList<Piloto>();
+    private static List<Equipe> lerEquipes(File arquivoDeEntrada) throws Exception{
+        List<Equipe> equipes = new ArrayList<Equipe>();
         BufferedReader reader = new BufferedReader(new FileReader(arquivoDeEntrada));
         String linha = reader.readLine();
         String[] arrayLinha;
@@ -206,60 +191,35 @@ public class ManterCampeonato {
         while(linha != null){
             arrayLinha = linha.split(";");
             if(arrayLinha.length == 3){
-                //Instanciar objetos
                 carro = new Carro();
                 piloto = new Piloto();
                 equipe = new Equipe();
-                //Setar atributos com valores lidos na linha
-                carro.setNumero(Integer.parseInt(arrayLinha[0]));
-                piloto.setNome(arrayLinha[1]);
-                equipe.setNome(arrayLinha[2]);
-                //Associar objetos
-                equipe.setCarro(carro);
-                carro.setEquipe(equipe);
-                carro.setPiloto(piloto);
-                piloto.setCarro(carro);
-                //Adicionar piloto no List
-                pilotos.add(piloto);
+                setarAtributosComValoresLidosNaLinha(carro, arrayLinha, piloto, equipe);
+                if(!equipeJaFoiImportada(equipes, equipe, carro, piloto)){
+                    importarNovaEquipe(equipe, carro, piloto, equipes);
+                }
             }else{
                 throw new Exception("Arquivo de pilotos e equipes inválido!");
             }
-            //Ler próxima linha
             linha = reader.readLine();
         }
-        return pilotos;
+        return equipes;
     }
     
     /**
      * UC - Importar Pilotos
      * @param arquivoDeEntrada 
      */
-    public static boolean importarPilotos(File arquivoDeEntrada){
-        List<Piloto> pilotos;
+    public static boolean importarEquipes(File arquivoDeEntrada){
+        List<Equipe> equipes;
         List<Corrida> corridas;
         File baseDeDados = new File(PATH_BASE_DE_DADOS);
         try {
             if(instanciarCampeonatoExistente()){
-                pilotos = campeonato.getPilotos();
-                corridas = campeonato.getCorridas();
-                if(!pilotos.isEmpty()){
-                    //Limpar resultados de corrida
-                    if(!corridas.isEmpty()){
-                        for (Corrida corrida : corridas) {
-                            corrida.setResultado(null);
-                        }
-                    }
-                    //Limpar pilotos
-                    pilotos.clear();
-                }
-                pilotos = lerPilotos(arquivoDeEntrada);
-                campeonato.setPilotos(pilotos);
-                persistirCampeonato();
+                importarEquipesEmCampeonadoExistente(arquivoDeEntrada);
             }else{
                 if(instanciarNovoCampeonato()){
-                    pilotos = lerPilotos(arquivoDeEntrada);
-                    campeonato.setPilotos(pilotos);
-                    persistirCampeonato();
+                    importarEquipesEmNovoCampeonato(arquivoDeEntrada);
                 }else{
                     throw new Exception("Não foi possível instanciar novo campeonato!");
                 }
@@ -271,73 +231,17 @@ public class ManterCampeonato {
         }
     }
     
-    /**
-     * Método auxiliar que retorna um Resultado de um arquivo de Resultado de Corrida
-     * @param arquivoDeEntrada
-     * @return
-     * @throws Exception 
-     */
     private static Resultado lerResultado(File arquivoDeEntrada) throws Exception{
        Resultado resultado = new Resultado();
        BufferedReader reader = new BufferedReader(new FileReader(arquivoDeEntrada));
-       String[] arrayLinha;
-       String linha;
-       //Ler CORRIDA:<NÚMERO DA CORRIDA>
-       Corrida corrida = new Corrida();
-       linha = reader.readLine();
-       if(linha != null){
-        arrayLinha = linha.split(":");
-       }else{
-           throw new Exception("Arquivo de resultado de corrida inválido!");
-       }
-       if(arrayLinha.length == 2){
-           corrida.setNumeroDaCorrida(Integer.parseInt(arrayLinha[1].trim()));
-           resultado.setCorrida(corrida);
-           corrida.setResultado(resultado);
-       }else{
-           throw new Exception("Arquivo de resultado de corrida inválido!");
-       }
-       //Ler VOLTAR REALIZADAS:<NÚMERO DE VOLTAS>
-       linha = reader.readLine();
-       if(linha != null){
-        arrayLinha = linha.split(":");
-       }else{
-           throw new Exception("Arquivo de resultado de corrida inválido!");
-       }
-       if(arrayLinha.length == 2){
-           resultado.setNumeroDeVoltasRealizadas(Integer.parseInt(arrayLinha[1].trim()));
-       }else{
-           throw new Exception("Arquivo de resultado de corrida inválido!");
-       }
-       //Ler Posições <Número da Posição>;<Número do Carro>
-       List<Posicao> posicoes = new ArrayList<Posicao>();
-       Posicao posicao;
-       Carro carro;
-       linha = reader.readLine();
-       while(linha != null){
-           arrayLinha = linha.split(";");
-           if(arrayLinha.length == 2){
-               posicao = new Posicao();
-               posicao.setNumero(Integer.parseInt(arrayLinha[0].trim()));
-               carro = new Carro();
-               carro.setNumero(Integer.parseInt(arrayLinha[1].trim()));
-               posicao.setCarro(carro);
-               posicoes.add(posicao);
-           }else{
-               throw new Exception("Arquivo de resultado de corrida inválido!");
-           }
-           //Ler próxima linha
-           linha = reader.readLine();
-       }
-       resultado.setPosicoes(posicoes);
+       String[] arrayLinha = null;
+       String linha = null;
+       arrayLinha = lerCorrida(reader, arrayLinha, resultado);
+       lerVoltarRealizadas(reader, arrayLinha, resultado);
+       lerPosicoes(linha, reader, resultado);
        return resultado;
     }
     
-    /**
-     * verifica se o arquivo de resultado da corrida já foi importado na base de dados
-     * @param arquivoDeEntrada
-     * @return 
-     */
     public static boolean resultadoDeCorridaJaFoiImportado(File arquivoDeEntrada){
         try{
             if(calendarioDeCorridasJaFoiImportado()){
@@ -428,16 +332,26 @@ public class ManterCampeonato {
     public static ClassificacaoGeralDePilotosTableModel getClassificacaoGeralDePilotosTableModel(){
         return new ClassificacaoGeralDePilotosTableModel(pontuarPilotos());
     }
+    
+    public static ClassificacaoGeralDeEquipesTableModel getClassificacaoGeralDeEquipesTableModel(){
+        return new ClassificacaoGeralDeEquipesTableModel(pontuarEquipes());
+    }
 
     public static ClassificacaoDePilotosPorCorridaTableModel getClassificacaoDePilotosPorCorridaTableModel(Integer numeroDaCorrida) {
         return new ClassificacaoDePilotosPorCorridaTableModel(pontuarPilotos(numeroDaCorrida));
     }
-
+    
+    private static List<Equipe> pontuarEquipes(){
+        List<Equipe> equipes = setColocacoesEmEquipes();
+        pontuarEquipes(equipes);
+        return equipes;
+    }
+    
     private static List<Piloto> pontuarPilotos(){
         Resultado resultado = null;
         List<Piloto> valores = new ArrayList<Piloto>();
         if(resultadoDeCorridaJaFoiImportado()){
-            valores = campeonato.getPilotos();
+            getPilotos(valores);
             for(Corrida corrida : campeonato.getCorridas()){
                 resultado = corrida.getResultado();
                 if(resultado !=  null){
@@ -462,28 +376,17 @@ public class ManterCampeonato {
     
     private static List<Piloto> pontuarPilotos(Integer numeroDaCorrida) {
         Resultado resultado = null;
-        List<Piloto> valores = null;
+        List<Piloto> valores = new ArrayList<Piloto>();
         if(resultadoDeCorridaJaFoiImportado()){
-            valores = campeonato.getPilotos();
-            for(Corrida corrida : campeonato.getCorridas()){
-                if(corrida.getNumeroDaCorrida().equals(numeroDaCorrida)){
-                    resultado = corrida.getResultado();
-                    resultado.setCorrida(corrida);
-                }
-            }
+            getPilotos(valores);
+            resultado = getResultado(numeroDaCorrida, resultado);
         }
         if(resultado !=  null){
             if(resultado.getNumeroDeVoltasRealizadas() > 1){
                 if(resultado.getNumeroDeVoltasRealizadas() > resultado.getCorrida().getNumeroDeVoltasPrevistas()*0.75){
-                    for (Posicao posicao : resultado.getPosicoes()) {
-                        Double[] pontuacao = {25.0,18.0,15.0,12.0,10.0,8.0,6.0,4.0,2.0,1.0};
-                        valores = pontuarPiloto(valores, posicao,pontuacao);
-                    }
+                    valores = pontuarPilotosNormal(resultado, valores);
                 }else{
-                    for (Posicao posicao : resultado.getPosicoes()) {
-                        Double[] pontuacao = {12.5,9.0,7.5,6.0,5.0,4.0,3.0,2.0,1.0,0.5};
-                        valores = pontuarPiloto(valores, posicao,pontuacao);
-                    }
+                    valores = pontuarPilotosPelaMetade(resultado, valores);
                 }
             }
         }
@@ -492,9 +395,11 @@ public class ManterCampeonato {
     
     private static List<Integer> getNumerosDeCorridasComResultado(){
         List<Integer> numerosDeCorridasComResultados = new ArrayList<Integer>();
-        for (Corrida corrida : campeonato.getCorridas()) {
-            if(corrida.getResultado() != null){
-                numerosDeCorridasComResultados.add(corrida.getNumeroDaCorrida());
+        if(instanciarCampeonatoExistente()){
+            for (Corrida corrida : campeonato.getCorridas()) {
+                if(corrida.getResultado() != null){
+                    numerosDeCorridasComResultados.add(corrida.getNumeroDaCorrida());
+                }
             }
         }
         return numerosDeCorridasComResultados;
@@ -504,9 +409,226 @@ public class ManterCampeonato {
         for (Piloto piloto : valores) {
             if(piloto.getCarro().getNumero().equals(posicao.getCarro().getNumero())){
                 piloto.setPontuacao(piloto.getPontuacao()+pontuacao[posicao.getNumero()-1]);
+                System.out.println("Piloto: "+piloto.getNome());
+                System.out.println("Pontuacao: "+piloto.getPontuacao());
             }
         }
         return valores;
+    }
+
+    private static boolean equipeJaFoiImportada(List<Equipe> equipes, Equipe equipe, Carro carro, Piloto piloto) throws Exception {
+        //Se equipe já foi importada associar carro a equipe
+        for(Equipe e : equipes){
+            if(e.getNome().equals(equipe.getNome())){
+                if(e.getCarro2() == null){
+                    e.setCarro2(carro);
+                    carro.setEquipe(e);
+                    carro.setPiloto(piloto);
+                    piloto.setCarro(carro);
+                    return true;
+                }else{
+                    throw new Exception("Não é possível associar mais de dois carros a uma mesma equipe!");
+                }
+            }
+        }
+        return false;
+    }
+
+    private static void setarAtributosComValoresLidosNaLinha(Carro carro, String[] arrayLinha, Piloto piloto, Equipe equipe) throws NumberFormatException {
+        //Setar atributos com valores lidos na linha
+        carro.setNumero(Integer.parseInt(arrayLinha[0]));
+        piloto.setNome(arrayLinha[1]);
+        equipe.setNome(arrayLinha[2]);
+    }
+
+    private static void importarNovaEquipe(Equipe equipe, Carro carro, Piloto piloto, List<Equipe> equipes) {
+        equipe.setCarro1(carro);
+        carro.setEquipe(equipe);
+        carro.setPiloto(piloto);
+        piloto.setCarro(carro);
+        equipes.add(equipe);
+    }
+
+    private static void limparResultadosDeCorrida(List<Corrida> corridas) {
+        if(!corridas.isEmpty()){
+            for (Corrida corrida : corridas) {
+                corrida.setResultado(null);
+            }
+        }
+    }
+
+    private static void importarEquipesEmCampeonadoExistente(File arquivoDeEntrada) throws FileNotFoundException, Exception {
+        List<Equipe> equipes;
+        List<Corrida> corridas;
+        equipes = campeonato.getEquipes();
+        corridas = campeonato.getCorridas();
+        if(!equipes.isEmpty()){
+            limparResultadosDeCorrida(corridas);
+            equipes.clear();
+        }
+        equipes = lerEquipes(arquivoDeEntrada);
+        campeonato.setEquipes(equipes);
+        persistirCampeonato();
+    }
+
+    private static void importarEquipesEmNovoCampeonato(File arquivoDeEntrada) throws FileNotFoundException, Exception {
+        List<Equipe> equipes;
+        equipes = lerEquipes(arquivoDeEntrada);
+        campeonato.setEquipes(equipes);
+        persistirCampeonato();
+    }
+
+    private static void getPilotos(List<Piloto> valores) {
+        for (Equipe equipe : campeonato.getEquipes()) {
+            if(equipe.getCarro1() != null){
+                valores.add(equipe.getCarro1().getPiloto());
+            }
+            if(equipe.getCarro2() != null){
+                valores.add(equipe.getCarro2().getPiloto());
+            }
+        }
+    }
+
+    private static Resultado getResultado(Integer numeroDaCorrida, Resultado resultado) {
+        for(Corrida corrida : campeonato.getCorridas()){
+            if(corrida.getNumeroDaCorrida().equals(numeroDaCorrida)){
+                resultado = corrida.getResultado();
+                resultado.setCorrida(corrida);
+            }
+        }
+        return resultado;
+    }
+
+    private static List<Piloto> pontuarPilotosNormal(Resultado resultado, List<Piloto> valores) {
+        for (Posicao posicao : resultado.getPosicoes()) {
+            Double[] pontuacao = {25.0,18.0,15.0,12.0,10.0,8.0,6.0,4.0,2.0,1.0};
+            valores = pontuarPiloto(valores, posicao,pontuacao);
+        }
+        return valores;
+    }
+
+    private static List<Piloto> pontuarPilotosPelaMetade(Resultado resultado, List<Piloto> valores) {
+        for (Posicao posicao : resultado.getPosicoes()) {
+            Double[] pontuacao = {12.5,9.0,7.5,6.0,5.0,4.0,3.0,2.0,1.0,0.5};
+            valores = pontuarPiloto(valores, posicao,pontuacao);
+        }
+        return valores;
+    }
+
+    private static String[] lerCorrida(BufferedReader reader, String[] arrayLinha, Resultado resultado) throws IOException, Exception {
+        String linha;
+        //Ler CORRIDA:<NÚMERO DA CORRIDA>
+        Corrida corrida = new Corrida();
+        linha = reader.readLine();
+        if(linha != null){
+            arrayLinha = linha.split(":");
+        }else{
+            throw new Exception("Arquivo de resultado de corrida inválido!");
+        }
+        if(arrayLinha.length == 2){
+            corrida.setNumeroDaCorrida(Integer.parseInt(arrayLinha[1].trim()));
+            resultado.setCorrida(corrida);
+            corrida.setResultado(resultado);
+        }else{
+            throw new Exception("Arquivo de resultado de corrida inválido!");
+        }
+        return arrayLinha;
+    }
+
+    private static void lerVoltarRealizadas(BufferedReader reader, String[] arrayLinha, Resultado resultado) throws Exception, IOException {
+        String linha;
+        //Ler VOLTAR REALIZADAS:<NÚMERO DE VOLTAS>
+        linha = reader.readLine();
+        if(linha != null){
+         arrayLinha = linha.split(":");
+        }else{
+            throw new Exception("Arquivo de resultado de corrida inválido!");
+        }
+        if(arrayLinha.length == 2){
+            resultado.setNumeroDeVoltasRealizadas(Integer.parseInt(arrayLinha[1].trim()));
+        }else{
+            throw new Exception("Arquivo de resultado de corrida inválido!");
+        }
+    }
+
+    private static void lerPosicoes(String linha, BufferedReader reader, Resultado resultado) throws IOException, Exception {
+        String[] arrayLinha;
+        //Ler Posições <Número da Posição>;<Número do Carro>
+        List<Posicao> posicoes = new ArrayList<Posicao>();
+        Posicao posicao;
+        Carro carro;
+        linha = reader.readLine();
+        while(linha != null){
+            arrayLinha = linha.split(";");
+            if(arrayLinha.length == 2){
+                posicao = new Posicao();
+                posicao.setNumero(Integer.parseInt(arrayLinha[0].trim()));
+                carro = new Carro();
+                carro.setNumero(Integer.parseInt(arrayLinha[1].trim()));
+                posicao.setCarro(carro);
+                posicoes.add(posicao);
+            }else{
+                throw new Exception("Arquivo de resultado de corrida inválido!");
+            }
+            //Ler próxima linha
+            linha = reader.readLine();
+        }
+        resultado.setPosicoes(posicoes);
+    }
+
+    private static void adicionarColocacaoDoPilotoNaEquipe(Equipe equipe, List<Piloto> pilotos, Piloto piloto) {
+        List<Integer> colocacoes;
+        colocacoes = equipe.getColocacoes();
+        Integer colocacaoPiloto = pilotos.indexOf(piloto)+1;
+        while(colocacoes.size() < colocacaoPiloto){
+                colocacoes.add(0);
+        }
+        colocacoes.set(colocacaoPiloto-1, colocacoes.get(colocacaoPiloto-1)+1);
+    }
+
+    private static boolean pilotoPertenceAEquipe(Piloto piloto, Equipe equipe) {
+        return piloto.getCarro().getEquipe().getNome().equals(equipe.getNome());
+    }
+
+    private static Corrida getCorrida(Integer numeroDaCorrida) {
+        for (Corrida c : campeonato.getCorridas()) {
+            if(c.getNumeroDaCorrida().equals(numeroDaCorrida)){
+                return c;
+            }
+        }
+        return null;
+    }
+
+    private static List<Equipe> setColocacoesEmEquipes() {
+        List<Integer> numerosDeCorridasComResultado = getNumerosDeCorridasComResultado();
+        List<Piloto> pilotos = new ArrayList<Piloto>();
+        List<Equipe> equipes = campeonato.getEquipes();
+        for (Integer numeroDaCorrida : numerosDeCorridasComResultado) {
+            pilotos = pontuarPilotos(numeroDaCorrida);
+            Collections.sort(pilotos);
+            Corrida corrida = getCorrida(numeroDaCorrida);
+            for (Piloto piloto : pilotos) {
+                for (Equipe equipe : equipes) {
+                    if(pilotoPertenceAEquipe(piloto, equipe)){
+                        if(corrida.getResultado().getNumeroDeVoltasRealizadas() > 1){
+                            adicionarColocacaoDoPilotoNaEquipe(equipe, pilotos, piloto);
+                        }
+                    }
+                }
+            }
+        }
+        return equipes;
+    }
+
+    private static void pontuarEquipes(List<Equipe> equipes) {
+        List<Piloto> pilotos = pontuarPilotos();
+        for (Equipe equipe : equipes) {
+            for (Piloto piloto : pilotos) {
+                if(piloto.getCarro().getEquipe().getNome().equals(equipe.getNome())){
+                    equipe.setPontuacao(equipe.getPontuacao()+piloto.getPontuacao());
+                }
+            }
+        }
     }
 
 }

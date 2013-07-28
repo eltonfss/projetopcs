@@ -24,7 +24,7 @@
         <object class="model.Corrida"> 
          <void property="data"> 
           <object class="java.util.Date"> 
-           <long>1374901512744</long> 
+           <long>1374963559276</long> 
           </object> 
          </void> 
          <void property="numeroDaCorrida"> 
@@ -138,7 +138,7 @@
         <object class="model.Corrida"> 
          <void property="data"> 
           <object class="java.util.Date"> 
-           <long>1374902072905</long> 
+           <long>1374963559292</long> 
           </object> 
          </void> 
          <void property="numeroDaCorrida"> 
@@ -252,7 +252,7 @@
         <object class="model.Corrida"> 
          <void property="data"> 
           <object class="java.util.Date"> 
-           <long>1374902054611</long> 
+           <long>1374963577669</long> 
           </object> 
          </void> 
          <void property="numeroDaCorrida"> 
@@ -366,7 +366,7 @@
         <object class="model.Corrida"> 
          <void property="data"> 
           <object class="java.util.Date"> 
-           <long>1374902038598</long> 
+           <long>1374963609571</long> 
           </object> 
          </void> 
          <void property="numeroDaCorrida"> 
@@ -459,85 +459,85 @@
     </object> 
    </void> 
   </void> 
-  <void property="pilotos"> 
+  <void property="equipes"> 
    <void method="add"> 
-    <object id="Piloto0" class="model.Piloto"> 
-     <void property="carro"> 
+    <object id="Equipe0" class="model.Equipe"> 
+     <void property="carro1"> 
       <object id="Carro0" class="model.Carro"> 
        <void property="equipe"> 
-        <object class="model.Equipe"> 
-         <void property="carro"> 
-          <object idref="Carro0"/> 
-         </void> 
-         <void property="nome"> 
-          <string>Red Bull Racing</string> 
-         </void> 
-        </object> 
+        <object idref="Equipe0"/> 
        </void> 
        <void property="numero"> 
         <int>1</int> 
        </void> 
        <void property="piloto"> 
-        <object idref="Piloto0"/> 
+        <object class="model.Piloto"> 
+         <void property="carro"> 
+          <object idref="Carro0"/> 
+         </void> 
+         <void property="nome"> 
+          <string>Sebastian Vettel</string> 
+         </void> 
+        </object> 
        </void> 
       </object> 
      </void> 
      <void property="nome"> 
-      <string>Sebastian Vettel</string> 
+      <string>Red Bull Racing</string> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object id="Piloto1" class="model.Piloto"> 
-     <void property="carro"> 
+    <object id="Equipe1" class="model.Equipe"> 
+     <void property="carro1"> 
       <object id="Carro1" class="model.Carro"> 
        <void property="equipe"> 
-        <object class="model.Equipe"> 
-         <void property="carro"> 
-          <object idref="Carro1"/> 
-         </void> 
-         <void property="nome"> 
-          <string>Lotus</string> 
-         </void> 
-        </object> 
+        <object idref="Equipe1"/> 
        </void> 
        <void property="numero"> 
         <int>7</int> 
        </void> 
        <void property="piloto"> 
-        <object idref="Piloto1"/> 
+        <object class="model.Piloto"> 
+         <void property="carro"> 
+          <object idref="Carro1"/> 
+         </void> 
+         <void property="nome"> 
+          <string>Kimi Raikkonen</string> 
+         </void> 
+        </object> 
        </void> 
       </object> 
      </void> 
      <void property="nome"> 
-      <string>Kimi Raikkonen</string> 
+      <string>Lotus</string> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object id="Piloto2" class="model.Piloto"> 
-     <void property="carro"> 
+    <object id="Equipe2" class="model.Equipe"> 
+     <void property="carro1"> 
       <object id="Carro2" class="model.Carro"> 
        <void property="equipe"> 
-        <object class="model.Equipe"> 
-         <void property="carro"> 
-          <object idref="Carro2"/> 
-         </void> 
-         <void property="nome"> 
-          <string>Ferrari</string> 
-         </void> 
-        </object> 
+        <object idref="Equipe2"/> 
        </void> 
        <void property="numero"> 
         <int>4</int> 
        </void> 
        <void property="piloto"> 
-        <object idref="Piloto2"/> 
+        <object class="model.Piloto"> 
+         <void property="carro"> 
+          <object idref="Carro2"/> 
+         </void> 
+         <void property="nome"> 
+          <string>Felipe Massa</string> 
+         </void> 
+        </object> 
        </void> 
       </object> 
      </void> 
      <void property="nome"> 
-      <string>Felipe Massa</string> 
+      <string>Ferrari</string> 
      </void> 
     </object> 
    </void> 
