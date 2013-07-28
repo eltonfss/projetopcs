@@ -24,7 +24,7 @@
         <object class="model.Corrida"> 
          <void property="data"> 
           <object class="java.util.Date"> 
-           <long>1374963559276</long> 
+           <long>1374982474385</long> 
           </object> 
          </void> 
          <void property="numeroDaCorrida"> 
@@ -132,102 +132,6 @@
      <void property="numeroDeVoltasPrevistas"> 
       <int>56</int> 
      </void> 
-     <void property="resultado"> 
-      <object id="Resultado1" class="model.Resultado"> 
-       <void property="corrida"> 
-        <object class="model.Corrida"> 
-         <void property="data"> 
-          <object class="java.util.Date"> 
-           <long>1374963559292</long> 
-          </object> 
-         </void> 
-         <void property="numeroDaCorrida"> 
-          <int>2</int> 
-         </void> 
-         <void property="resultado"> 
-          <object idref="Resultado1"/> 
-         </void> 
-        </object> 
-       </void> 
-       <void property="numeroDeVoltasRealizadas"> 
-        <int>60</int> 
-       </void> 
-       <void property="posicoes"> 
-        <object class="java.util.ArrayList"> 
-         <void method="add"> 
-          <object class="model.Posicao"> 
-           <void property="carro"> 
-            <object class="model.Carro"> 
-             <void property="numero"> 
-              <int>7</int> 
-             </void> 
-            </object> 
-           </void> 
-           <void property="numero"> 
-            <int>1</int> 
-           </void> 
-          </object> 
-         </void> 
-         <void method="add"> 
-          <object class="model.Posicao"> 
-           <void property="carro"> 
-            <object class="model.Carro"> 
-             <void property="numero"> 
-              <int>3</int> 
-             </void> 
-            </object> 
-           </void> 
-           <void property="numero"> 
-            <int>2</int> 
-           </void> 
-          </object> 
-         </void> 
-         <void method="add"> 
-          <object class="model.Posicao"> 
-           <void property="carro"> 
-            <object class="model.Carro"> 
-             <void property="numero"> 
-              <int>1</int> 
-             </void> 
-            </object> 
-           </void> 
-           <void property="numero"> 
-            <int>3</int> 
-           </void> 
-          </object> 
-         </void> 
-         <void method="add"> 
-          <object class="model.Posicao"> 
-           <void property="carro"> 
-            <object class="model.Carro"> 
-             <void property="numero"> 
-              <int>4</int> 
-             </void> 
-            </object> 
-           </void> 
-           <void property="numero"> 
-            <int>4</int> 
-           </void> 
-          </object> 
-         </void> 
-         <void method="add"> 
-          <object class="model.Posicao"> 
-           <void property="carro"> 
-            <object class="model.Carro"> 
-             <void property="numero"> 
-              <int>10</int> 
-             </void> 
-            </object> 
-           </void> 
-           <void property="numero"> 
-            <int>5</int> 
-           </void> 
-          </object> 
-         </void> 
-        </object> 
-       </void> 
-      </object> 
-     </void> 
     </object> 
    </void> 
    <void method="add"> 
@@ -246,102 +150,6 @@
      <void property="numeroDeVoltasPrevistas"> 
       <int>56</int> 
      </void> 
-     <void property="resultado"> 
-      <object id="Resultado2" class="model.Resultado"> 
-       <void property="corrida"> 
-        <object class="model.Corrida"> 
-         <void property="data"> 
-          <object class="java.util.Date"> 
-           <long>1374963577669</long> 
-          </object> 
-         </void> 
-         <void property="numeroDaCorrida"> 
-          <int>3</int> 
-         </void> 
-         <void property="resultado"> 
-          <object idref="Resultado2"/> 
-         </void> 
-        </object> 
-       </void> 
-       <void property="numeroDeVoltasRealizadas"> 
-        <int>1</int> 
-       </void> 
-       <void property="posicoes"> 
-        <object class="java.util.ArrayList"> 
-         <void method="add"> 
-          <object class="model.Posicao"> 
-           <void property="carro"> 
-            <object class="model.Carro"> 
-             <void property="numero"> 
-              <int>7</int> 
-             </void> 
-            </object> 
-           </void> 
-           <void property="numero"> 
-            <int>1</int> 
-           </void> 
-          </object> 
-         </void> 
-         <void method="add"> 
-          <object class="model.Posicao"> 
-           <void property="carro"> 
-            <object class="model.Carro"> 
-             <void property="numero"> 
-              <int>3</int> 
-             </void> 
-            </object> 
-           </void> 
-           <void property="numero"> 
-            <int>2</int> 
-           </void> 
-          </object> 
-         </void> 
-         <void method="add"> 
-          <object class="model.Posicao"> 
-           <void property="carro"> 
-            <object class="model.Carro"> 
-             <void property="numero"> 
-              <int>1</int> 
-             </void> 
-            </object> 
-           </void> 
-           <void property="numero"> 
-            <int>3</int> 
-           </void> 
-          </object> 
-         </void> 
-         <void method="add"> 
-          <object class="model.Posicao"> 
-           <void property="carro"> 
-            <object class="model.Carro"> 
-             <void property="numero"> 
-              <int>4</int> 
-             </void> 
-            </object> 
-           </void> 
-           <void property="numero"> 
-            <int>4</int> 
-           </void> 
-          </object> 
-         </void> 
-         <void method="add"> 
-          <object class="model.Posicao"> 
-           <void property="carro"> 
-            <object class="model.Carro"> 
-             <void property="numero"> 
-              <int>10</int> 
-             </void> 
-            </object> 
-           </void> 
-           <void property="numero"> 
-            <int>5</int> 
-           </void> 
-          </object> 
-         </void> 
-        </object> 
-       </void> 
-      </object> 
-     </void> 
     </object> 
    </void> 
    <void method="add"> 
@@ -359,102 +167,6 @@
      </void> 
      <void property="numeroDeVoltasPrevistas"> 
       <int>57</int> 
-     </void> 
-     <void property="resultado"> 
-      <object id="Resultado3" class="model.Resultado"> 
-       <void property="corrida"> 
-        <object class="model.Corrida"> 
-         <void property="data"> 
-          <object class="java.util.Date"> 
-           <long>1374963609571</long> 
-          </object> 
-         </void> 
-         <void property="numeroDaCorrida"> 
-          <int>4</int> 
-         </void> 
-         <void property="resultado"> 
-          <object idref="Resultado3"/> 
-         </void> 
-        </object> 
-       </void> 
-       <void property="numeroDeVoltasRealizadas"> 
-        <int>10</int> 
-       </void> 
-       <void property="posicoes"> 
-        <object class="java.util.ArrayList"> 
-         <void method="add"> 
-          <object class="model.Posicao"> 
-           <void property="carro"> 
-            <object class="model.Carro"> 
-             <void property="numero"> 
-              <int>7</int> 
-             </void> 
-            </object> 
-           </void> 
-           <void property="numero"> 
-            <int>1</int> 
-           </void> 
-          </object> 
-         </void> 
-         <void method="add"> 
-          <object class="model.Posicao"> 
-           <void property="carro"> 
-            <object class="model.Carro"> 
-             <void property="numero"> 
-              <int>3</int> 
-             </void> 
-            </object> 
-           </void> 
-           <void property="numero"> 
-            <int>2</int> 
-           </void> 
-          </object> 
-         </void> 
-         <void method="add"> 
-          <object class="model.Posicao"> 
-           <void property="carro"> 
-            <object class="model.Carro"> 
-             <void property="numero"> 
-              <int>1</int> 
-             </void> 
-            </object> 
-           </void> 
-           <void property="numero"> 
-            <int>3</int> 
-           </void> 
-          </object> 
-         </void> 
-         <void method="add"> 
-          <object class="model.Posicao"> 
-           <void property="carro"> 
-            <object class="model.Carro"> 
-             <void property="numero"> 
-              <int>4</int> 
-             </void> 
-            </object> 
-           </void> 
-           <void property="numero"> 
-            <int>4</int> 
-           </void> 
-          </object> 
-         </void> 
-         <void method="add"> 
-          <object class="model.Posicao"> 
-           <void property="carro"> 
-            <object class="model.Carro"> 
-             <void property="numero"> 
-              <int>10</int> 
-             </void> 
-            </object> 
-           </void> 
-           <void property="numero"> 
-            <int>5</int> 
-           </void> 
-          </object> 
-         </void> 
-        </object> 
-       </void> 
-      </object> 
      </void> 
     </object> 
    </void> 
@@ -536,8 +248,55 @@
        </void> 
       </object> 
      </void> 
+     <void property="carro2"> 
+      <object id="Carro3" class="model.Carro"> 
+       <void property="equipe"> 
+        <object idref="Equipe2"/> 
+       </void> 
+       <void property="numero"> 
+        <int>3</int> 
+       </void> 
+       <void property="piloto"> 
+        <object class="model.Piloto"> 
+         <void property="carro"> 
+          <object idref="Carro3"/> 
+         </void> 
+         <void property="nome"> 
+          <string>Fernando Alonso</string> 
+         </void> 
+        </object> 
+       </void> 
+      </object> 
+     </void> 
      <void property="nome"> 
       <string>Ferrari</string> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object id="Equipe3" class="model.Equipe"> 
+     <void property="carro1"> 
+      <object id="Carro4" class="model.Carro"> 
+       <void property="equipe"> 
+        <object idref="Equipe3"/> 
+       </void> 
+       <void property="numero"> 
+        <int>10</int> 
+       </void> 
+       <void property="piloto"> 
+        <object class="model.Piloto"> 
+         <void property="carro"> 
+          <object idref="Carro4"/> 
+         </void> 
+         <void property="nome"> 
+          <string>Lewis Hamilton</string> 
+         </void> 
+        </object> 
+       </void> 
+      </object> 
+     </void> 
+     <void property="nome"> 
+      <string>McLaren</string> 
      </void> 
     </object> 
    </void> 

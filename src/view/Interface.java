@@ -368,7 +368,9 @@ public class Interface extends javax.swing.JFrame {
     }
 
     private void atualizarClassificacaoGeralDePilotos() {
-        jTableClassificacaoGeralDePilotos.setModel(ManterCampeonato.getClassificacaoGeralDePilotosTableModel());
+        if(ManterCampeonato.resultadoDeCorridaJaFoiImportado()){
+            jTableClassificacaoGeralDePilotos.setModel(ManterCampeonato.getClassificacaoGeralDePilotosTableModel());
+        }
     }
 
     private void atualizarResultadosDeCorridas() {
@@ -384,6 +386,8 @@ public class Interface extends javax.swing.JFrame {
     }
 
     private void atualizarClassificacaoGeralDeEquipes() {
+       if(ManterCampeonato.resultadoDeCorridaJaFoiImportado()){
         jTableClassificacaoGeralDeEquipes.setModel(ManterCampeonato.getClassificacaoGeralDeEquipesTableModel());
+       }
     }
 }

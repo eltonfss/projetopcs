@@ -1,3 +1,5 @@
 1;Sebastian Vettel;Red Bull Racing
 7;Kimi Raikkonen;Lotus
 4;Felipe Massa;Ferrari
+3;Fernando Alonso;Ferrari
+10;Lewis Hamilton;McLaren

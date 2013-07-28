@@ -66,10 +66,6 @@ public class ManterCampeonato {
         } 
     }
 
-    /**
-     * verifica se o arquivo de calendário de corridas já foi importado na base de dados
-     * @return
-     */
     public static boolean calendarioDeCorridasJaFoiImportado(){
         if(instanciarCampeonatoExistente()){
             if(campeonato.getCorridas().isEmpty()){
@@ -82,12 +78,6 @@ public class ManterCampeonato {
         }
     }
     
-    /**
-     * Método auxiliar que retorna um List de Corrida de um arquivo de Calendário de Corridas
-     * @param arquivoDeEntrada
-     * @return
-     * @throws Exception
-     */
     private static List<Corrida> lerCalendarioDeCorridas(File arquivoDeEntrada) throws Exception{
         List<Corrida> corridas = new ArrayList<Corrida>();
         BufferedReader reader = new BufferedReader(new FileReader(arquivoDeEntrada));
@@ -121,10 +111,6 @@ public class ManterCampeonato {
         return corridas;
     }
      
-    /**
-     * UC - Importar Calendário de Corridas
-     * @param arquivoDeEntrada 
-     */
     public static boolean importarCalendarioDeCorridas(File arquivoDeEntrada){
         List<Corrida> corridas;
         File baseDeDados = new File(PATH_BASE_DE_DADOS);
@@ -409,8 +395,6 @@ public class ManterCampeonato {
         for (Piloto piloto : valores) {
             if(piloto.getCarro().getNumero().equals(posicao.getCarro().getNumero())){
                 piloto.setPontuacao(piloto.getPontuacao()+pontuacao[posicao.getNumero()-1]);
-                System.out.println("Piloto: "+piloto.getNome());
-                System.out.println("Pontuacao: "+piloto.getPontuacao());
             }
         }
         return valores;
